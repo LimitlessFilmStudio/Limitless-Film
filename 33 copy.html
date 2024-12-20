@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limitless Motion Pictures</title>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            overflow-x: hidden; /* 防止横向滚动 */
+            transition: filter 0.3s ease; /* 平滑过渡效果 */
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #0779e4 3px solid;
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            padding: 0;
+            list-style: none;
+        }
+        header li {
+            float: left;
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+        header #branding {
+            float: left;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        #showcase {
+            min-height: 400px;
+            background: url('https://img1.doubanio.com/view/photo/l/public/p2909765088.jpg') no-repeat center center/cover;
+            text-align: center;
+            color: #fff;
+        }
+        #showcase h1 {
+            margin-top: 100px;
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+        #showcase p {
+            font-size: 20px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px 0;
+            background: #fff;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 30px;
+        }
+        .profile-img {
+            max-width: 100%; /* 调整头像的最大宽度为 80% */
+            height: auto; /* 保持图片的比例 */
+            margin-bottom: 20px; /* 增加头像下方的间距 */
+        }
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        .social {
+            text-align: center;
+            padding: 20px;
+        }
+        .social a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        .works-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            width: calc(20% - 5px); /* 每个项目占宽度的25%减去间距 */
+            height: 500px; /* 固定高度 */
+            transition: all 0.3s ease;
+        }
+        .works-item img {
+            width: 300px; /* 调整宽度 */
+            height: 450px; /* 调整高度 */
+            margin-bottom: 10px;
+        }
+        .works-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px; /* 增加间距 */
+        }
+        h3.centered {
+            text-align: center; /* 让标题居中显示 */
+            margin-bottom: 40px; /* 增加行间距 */
+        }
+        .synopsis {
+            display: none; /* 初始状态隐藏 */
+            padding: 10px;
+            background: none;
+            border: none;
+            margin-top: 10px;
+            width: 80%;
+            text-align: left;
+        }
+        .show-synopsis {
+            display: block; /* 显示梗概 */
+        }
+        .members-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* 使成员之间均匀分布 */
+            gap: 20px; /* 增加成员之间的间距 */
+            background: #f4f4f4;
+        }
+
+        .member {
+            flex: 1 1 calc(33% - 20px); /* 每个成员占三分之一的宽度，减去间距 */
+            box-sizing: border-box; /* 包含间距在内计算宽度 */
+            text-align: left; /* 使文本左对齐 */
+            background: rgba(0, 0, 0, 0); /* 背景半透明 */
+        }
+
+         /* 顶层显示预告片和梗概 */
+        .top-layer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: rgba(0, 0, 0, 0); /* 背景半透明 */
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+            text-align: center;
+            max-width: 80%;
+            width: 900px;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        /* 背景模糊效果 */
+        .blur-background {
+            filter: blur(5px); /* 应用模糊效果 */
+            transition: filter 0.3s ease; /* 平滑过渡效果 */
+        }
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0779e4;
+        }
+
+        /* 工作项的图像和梗概处理 */
+        .works-item .synopsis {
+            display: none;
+            text-align: left;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .works-item .synopsis.show-synopsis {
+            display: block;
+        }
+
+        .release-date {
+            font-size: 14px;
+            color: #777;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+        .job-title {
+            font-size: 14px;
+            color: #777;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+        .blur-background {
+            filter: blur(0px);
+        }
+    </style>
+</head>
+<body class="smooth-scroll">
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>不止电影工作室</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#about">工作室简介</a></li>
+                    <li><a href="#works">剪辑作品</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="showcase">
+        <div class="container">
+            <h1>不止电影工作室</h1>
+            <h2>Limitless Motion Pictures</h1>
+            <p>光影不止，梦想不息</p>
+        </div>
+    </section>
+
+     <section id="about" class="container">
+        <h2>工作室简介</h2>
+        <p>不止电影工作室专注于现实主义题材创作，以真实细腻的叙事和自然美学风格呈现多样生活与深刻情感。我们致力于用影像打动人心，引发观众对现实的思考与共鸣。</p>
+
+        <div class="members-container">
+            <div class="member">
+                <img src="https://img9.doubanio.com/icon/ul88038496-14.jpg" alt="Nathan Lee" class="profile-img">
+                <h3>Nathan Lee</h3>
+                <p>创始人、剪辑师</p>
+                <p>擅长精细化剪辑和独立电影的创作，主张“剪辑是故事的灵魂”。有着多年的项目经验，涉猎范围广泛，包括动作、剧情、悬疑等多个题材。</p>
+                <p>代表作品：《731》、《重生》、《怒潮》、《危机航线》、《关于我妈的一切》、《如影随心》</p>
+            </div>
+
+            <div class="member">
+                <img src="https://via.placeholder.com/250" alt="Member 2" class="profile-img">
+                <h3>闫瑞鹏</h3>
+                <p>创始人、剪辑师</p>
+                <p>具备深厚的视觉艺术背景，专注于影像的创意剪辑。她对节奏把控和镜头语言的运用有着敏锐的洞察力。</p>
+                <p>代表作品：《球状闪电》、《消失的孩子》、《中国刑警》、《穿越寒冬拥抱你》、《扫黑》、《温暖的抱抱》、《英格力士》 、《刀背藏身》、《师父》、《闯入者》</p>
+            </div>
+
+            <div class="member">
+                <img src="https://via.placeholder.com/250" alt="Member 3" class="profile-img">
+                <h3>魏志华</h3>
+                <p>创始人、剪辑师</p>
+                <p>经验丰富的剪辑师，擅长快速高效的剪辑工作，确保项目按时完成，且质量上乘。</p>
+                <p>代表作品：《欢乐颂1、2、3、4、5》《好家伙》、《凡人歌》、《都挺好》、《猎风行动》、《青年医生》</p>
+            </div>
+        </div>
+    </section>
+
+        <section id="works" class="container">
+        <h2>剪辑作品</h2>
+        <h3 class="centered">电影 Film</h3>
+        <div class="works-container">
+                <div class="works-item" data-synopsis="这是航班HY688，我们遭遇劫机！劫匪要价35亿人民币！目前飞机处于失控状态，请求支援！！！”一架五星级超豪华A380客机在国际首航途中遭遇暴力劫机，整架飞机被杀意笼罩。机舱内，国际安保专家高皓军（刘德华 饰）正在和疯批悍匪团周旋，他的女儿小军（张子枫 饰）被绑为人质，性命岌岌可危。劫匪头目Mike（屈楚萧 饰）要价35亿人民币，全机乘客沦为他的筹码和玩具。女儿和前妻傅源（刘涛 饰）先后落入魔爪，暴躁杀神高晧军开启极限反杀模式，一场高空追杀就此展开。此时机舱内已是浓烟滚滚，坠机只是时间问题！全机乘客能否安全降落，这架摇摇欲坠的豪华客机究竟是最后的栖身之所还是坠入地狱的幽灵航班？" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4" >
+                <img src="https://img9.doubanio.com/view/photo/l/public/p2913215934.jpg" alt="危机航线">
+                <span class="work-title">《危机航线》</span>
+                <span class="release-date">上映时间: 2024年9月30日</span>
+                <span class="job-title">剪辑助理</span>
+                <div class="synopsis">“</div>
+            </div>
+            <div class="works-item" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/eb2fe23b1397757890956248912/v.f42905.mp4" data-synopsis="在隐蔽的缦城角落，利欲熏心的贩毒集团不择手段，致使无数人因沾染毒品而家庭破碎、坠落深渊。被毒贩迫害至家破人亡的张耀（张家辉 饰）为复仇，与缉毒队长安渡（阮经天 饰）暗中合作，二人联手做局狠辣除害，誓要将犯罪集团的榜一榜二大哥穆坤和安佩全部铲除。然而没想到在这背后竟藏着一场精心布置的复仇棋局，是同仇敌忾还是各怀鬼胎？在这场较量中，到底谁才是执棋人，谁又是被操作的棋子？当危机悄然而至，是沉沦还是警醒，一切请小心为上……">
+                <img src="https://img1.doubanio.com/view/photo/l/public/p2911838840.jpg" alt="重生">
+                <span class="work-title">《重生》</span>
+                <span class="release-date">上映时间: 2024年8月16日</span>
+                <span class="job-title">剪辑师</span>
+                <div class="synopsis"></div>
+            </div>
+            <div class="works-item" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/16d41d183270835013807942221/v.f42905.mp4" data-synopsis="横跨黑白两道只手遮天的洪泰集团正值换选之际，一个神秘杀手陈安（张家辉 饰）却突然只身闯入这个是非混乱的旋涡，搅得洪泰集团大乱。身处警察阵营的麦朗汶（阮经天 饰）和黑帮阵营的马文康（王大陆 饰）也盯上了他……各方势力伺机而动，谁才是幕后的操控者？一场生猛混战一触即发。">
+                <img src="http://img5.mtime.cn/pi/2023/11/27/123039.96783807_1000X1000.jpg" alt="怒潮">
+                <span class="work-title">《怒潮》</span>
+                <span class="release-date">上映时间: 2023年12月16日</span>
+                <span class="job-title">剪辑师</span>
+                <div class="synopsis"></div>
+            </div>
+            <div class="works-item" data-synopsis="2020年1月23日，农历腊月二十九，武汉宣布封城。本片聚焦这一特殊时刻，以温情和治愈为基调，刻画了普通市民守望相助、真挚动人的爱情群像。 快递员阿勇（黄渤 饰），骑手武哥（贾玲 饰），钢琴老师叶子扬（朱一龙 饰），中年夫妇刘亚兰（徐帆 饰）和李宏宇（高亚麟 饰）， 退休老医生谢咏琴（吴彦姝 饰）和餐厅老板沛爷（许绍雄 饰），实习护士夏晓（周冬雨 饰），滞留旅客张哲（刘昊然 饰）和君君（乔欣 饰）。 疫情下，爱给了他们挺身而出的勇气和力量。他们以笑做盾，以爱为矛，冲破凛冽寒冬和恐惧，勇敢拥抱。爱在武汉的烟火气下蔓延，抵御一切苦难，最终见证奇迹。" data-trailer="https://vt1.doubanio.com/202412191746/54cc865a60a24355117321026a537aea/view/movie/M/402840565.mp4" >
+                <img src="https://img9.doubanio.com/view/photo/l/public/p2740244776.jpg" alt="穿越寒冬拥抱你">
+                <span class="work-title">《穿过寒冬拥抱你》</span>
+                <span class="release-date">上映时间: 2021年12月31日</span>
+                <span class="job-title">跟组剪辑</span>
+                <div class="synopsis">“</div>
+            </div>
+            <div class="works-item" data-trailer="https://vt1.doubanio.com/202412191556/7d246d0f602288a9c1aae99f4a5ae0e6/view/movie/M/402800382.mp4" data-synopsis="妈妈季佩珍（徐帆 饰）是这个家的灵魂所在，她像有分身术一样能照顾到每一个人。在她的面面俱到之下，这个家看上去井然有序，然而事实并非如此。在妈妈季佩珍眼里女儿李小美（张婧仪 饰）永远都是最优秀的，却不知在北京工作生活的她还有另一面。女儿对妈妈的掌控有多抵触，季佩珍更是不了解。医生丈夫李文舫（许亚军 饰）因几年前的一次失误，至今还无法拿起手术刀。婆婆患有阿尔兹海默症，生活都无法自理……就在身为教师的季佩珍刚刚退休，似乎能松一口气多拥有些自己的时间，却被查出了恶性肿瘤四期。如果妈妈只剩下四个月的生命，这家人的生活又该如何继续下去呢？">
+                <img src="http://img5.mtime.cn/pi/2021/09/07/104026.62931612_1000X1000.jpg" alt="关于我妈的一切">
+                <span class="work-title">《关于我妈的一切》</span>
+                <span class="release-date">上映时间: 2021年9月19日</span>
+                <span class="job-title">剪辑助理</span>
+                <div class="synopsis"></div>
+            </div>
+            <div class="works-item" data-trailer="https://vt1.doubanio.com/202412191749/0eec839766c5dcb049492a38c21ac2aa/view/movie/M/402740931.mp4" data-synopsis="该片是国内首部以“扫黑除恶”行动为题材、展现全国扫黑办督办案件的影视化作品，讲述某扫黑专案组组长宋一锐带领组员由一起征地案深入调查，突破层层阻挠，与幕后的黑恶势力展开激烈斗争，最终揭开腐败官员利用公职权力充当犯罪保护伞的虚伪面具，将犯罪分子绳之以法的故事。">
+                <img src="https://img1.doubanio.com/view/photo/l/public/p2641608918.jpg" alt="扫黑·决战">
+                <span class="work-title">《扫黑·决战》</span>
+                <span class="release-date">上映时间: 2021年5月1日</span>
+                <span class="job-title">跟组剪辑</span>
+                <div class="synopsis"></div>
+            </div>
+            <div class="works-item" data-trailer="https://vt1.doubanio.com/202412191557/db07e5bcbd8a4a304e45b3b0a740a8bf/view/movie/M/402450662.mp4" data-synopsis="小提琴家陆松（陈晓 饰）与室内设计师文罂（杜鹃 饰）巴黎邂逅，不打不相识，彼此迷恋越陷越深。爱情之名怂恿着他们为爱再大胆一次，走出各自问题满满的情感关系。仿佛只要现任变前任，幸福就唾手可得。然而前任们也都是战士，文罂的前任郑可（华少 饰）是个理性至极的医生，陆松的前任刘娟（马苏 饰）则在情感社区开启了喋喋不休的骂战，是继续坚持对爱的信仰，还是选择放下与原谅重新开始？现代都市情感危机在北京与巴黎街头上演。越是深爱的，往往也正是痛苦的源头，爱情，像是影子，抓不住却也离不开，如影随心。">
+                <img src="http://img5.mtime.cn/pi/2019/04/12/143753.21101574_1000X1000.jpg" alt="如影随心">
+                <span class="work-title">《如影随心》</span>
+                <span class="release-date">上映时间: 2019年4月19日</span>
+                <span class="job-title">剪辑师</span>
+                <div class="synopsis"></div>
+            </div>
+            <div class="works-item" data-trailer="https://vt1.doubanio.com/202412191558/e0803f4b8bd448b28c565699ad3ed63f/view/movie/M/302170927.mp4" data-synopsis="梦想靠大项目咸鱼翻身的范小兵（大鹏 饰）始终无法摆脱一个阴影，那就是退伍军人出身的老爹范英雄（范伟 饰）。小兵油嘴滑舌爱忽悠，英雄刚正不阿会武术，小兵斗英雄，天雷勾地火。 卤煮店小老板刘雯（张天爱 饰）与小兵相识十年，两人友达之上恋爱未满，她是小兵唯一愿意吐露真心的港湾。范小兵欠下大老板OK哥（任达华 饰）的钱，被追债小弟方健（乔杉 饰）一路折磨，倒霉不断，还面临凶狠狗哥（梁龙 饰）的生命威胁。范小兵不得已将弄钱对象转向老爹，不知情的范英雄此时正躲闪着邻居邬仙仙（邬君梅 饰）如狼似虎的猛烈追求，殊不知儿子范小兵已经针对自己开启了一个搞笑又荒唐的惊天计划……">
+                <img src="http://img5.mtime.cn/pi/2017/07/12/175943.50083410_1000X1000.jpg" alt="父子雄兵">
+                <span class="work-title">《父子雄兵》</span>
+                <span class="release-date">上映时间: 2017年7月21日</span>
+                <span class="job-title">剪辑助理</span>
+                <div class="synopsis"></div>
+            </div>
+        </div>
+        <h3 class="centered">电视剧 Television</h3>
+        <div class="works-container">
+            <div class="works-item">
+                <img src="https://img1.doubanio.com/view/photo/l/public/p2869230669.jpg" alt="猎罪图鉴">
+                <span class="work-title">《猎罪图鉴》(20集)</span>
+                <span class="release-date">首播时间: 2022年3月6日</span>
+                <span class="job-title">剪辑助理</span>
+                <div class="synopsis">该剧讲述了因一起尘封旧案而结怨的模拟画像师沈翊和刑警队长杜城，在机缘巧合下被迫搭档，两人联手侦破多起离奇疑案，共同追踪谜底真相的故事。</div>
+            </div>
+            <div class="works-item">
+                <img src="https://img1.doubanio.com/view/photo/l/public/p2607339188.jpg" alt="民初奇人传">
+                <span class="work-title">《民初奇人传》(34集)</span>
+                <span class="release-date">首播时间: 2020年6月12日</span>
+                <span class="job-title">剪辑助理</span>
+                <div class="synopsis">讲述了留洋归国的学子华民初意外地邂逅了一众自称八行的奇人异士，并阴差阳错的成为了他们的领袖，开始为八行解散、寻求正道而奔波的故事。故事中，华民初与率真神秘的易阳师希水、家族义姐钟瑶一同迎来了一个接一个的困境难题，也与八行众人齐心协力共同对抗阴谋者的惊天迷局。</div>
+            </div>
+            <div class="works-item">
+                <img src="https://img2.doubanio.com/view/photo/s_ratio_poster/public/p2323031571.jpg" alt="林海雪原">
+                <span class="work-title">《林海雪原》(64集)</span>
+                <span class="release-date">首播时间: 2017年6月8日</span>
+                <span class="job-title">剪辑助理</span>
+                <div class="synopsis">1946年冬天，国民党在东北地区成立了由伪满官吏、地主、恶霸、土匪等组成的“中央先谴军”。这群乌合之众不断对我军进行军事骚扰，其中匪首许大马棒（秦卫东 饰）、座山雕（倪大红 饰）、马希山（丁勇岱 饰）等人分别集结残股，窜居深山密林之中，长期进行暗杀破坏，手段残忍无比。东北地区一时间匪患成群，这对当地百姓的工作、生活都造成了极大的威胁，并严重破坏了土地改革的成果。为了清除匪患，军区领导决定改变战术，组织了一支36人的小分队。在团参谋长少剑波（张睿 饰）的带领下，杨子荣（李光洁 饰）、孙达得（解子腾 饰）、高波（张晚意 饰）等人深入林海雪原，先后奇袭奶头山、智取威虎山、围剿大锅盔，与这些“鲨鱼性、麻雀式”的凶残敌人斗智斗勇、殊死拼搏。经过一次又一次艰苦卓绝的激烈交锋，匪徒们最终被全部歼灭，小分队取得了剿匪的全面胜利。</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="container">
+        <h2>联系方式</h2>
+        <ul>
+            <li>电子邮件: ednathan@foxmail.com</li>
+            <li>电话:李生 178-9609-7228</li>
+            <li>电话:闫生 18514050716</li>
+        </ul>
+        <div class="social">
+            <a href="#"><i class="fab fa-weibo"></i></a>
+            <a href="#"><i class="fab fa-wechat"></i></a>
+            <a href="https://twitter.com/nathanlee"><i class="fab fa-twitter"></i></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Copyright &copy; 2024 Nathan Lee. All rights reserved.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const worksItems = document.querySelectorAll('.works-item');
+        const body = document.querySelector('body');
+        let activeItem = null;
+
+        worksItems.forEach(item => {
+            item.addEventListener('click', function (event) {
+                event.stopPropagation();
+
+                // If another item is already active, close it first
+                if (activeItem && activeItem !== item) {
+                    closeTrailer();
+                }
+
+                // Show trailer and synopsis
+                activeItem = item;
+
+                const trailerUrl = item.getAttribute('data-trailer');
+                const synopsisText = item.getAttribute('data-synopsis');
+
+                // Blur the background
+                body.classList.add('blur-background');
+
+                // Create and show the top layer with trailer and synopsis
+                const topLayer = document.createElement('div');
+                topLayer.classList.add('top-layer');
+                topLayer.innerHTML = `
+                    <h2>${item.querySelector('.work-title').innerText}</h2>
+                    <p>${synopsisText}</p>
+                    <iframe width="800" height="450" src="${trailerUrl}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <button onclick="closeTrailer()">关闭</button>
+                `;
+                body.appendChild(topLayer);
+
+                // Hide the image and show the synopsis for this item
+                item.querySelector('img').style.display = 'none';
+                const synopsisElement = item.querySelector('.synopsis');
+                synopsisElement.classList.add('show-synopsis');
+                synopsisElement.textContent = synopsisText;
+            });
+        });
+
+        // Click anywhere outside the top layer to close it
+        document.addEventListener('click', function(event) {
+            const topLayer = document.querySelector('.top-layer');
+            if (topLayer && !topLayer.contains(event.target)) {
+                closeTrailer();
+            }
+        });
+
+        // Close trailer and remove top layer
+        window.closeTrailer = function() {
+            body.classList.remove('blur-background');
+            const topLayer = document.querySelector('.top-layer');
+            if (topLayer) {
+                topLayer.remove();
+            }
+
+            // Show the image and hide the synopsis again
+            if (activeItem) {
+                activeItem.querySelector('img').style.display = 'block';
+                const synopsisElement = activeItem.querySelector('.synopsis');
+                synopsisElement.classList.remove('show-synopsis');
+                activeItem = null; // Reset active item
+            }
+        };
+    });
+</script>
+</body>
+</html>
