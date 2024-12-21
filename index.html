@@ -147,46 +147,57 @@
         .show-synopsis {
             display: block; /* 显示梗概 */
         }
-        .members-container {
+        .team-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between; /* 使成员之间均匀分布 */
-            gap: 20px; /* 增加成员之间的间距 */
-            background: #f4f4f4;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
         }
-
-        .member {
-            flex: 1 1 calc(33% - 20px); /* 每个成员占三分之一的宽度，减去间距 */
-            box-sizing: border-box; /* 包含间距在内计算宽度 */
-            text-align: left; /* 使文本左对齐 */
-            background: rgba(0, 0, 0, 0); /* 背景半透明 */
+        .team-member {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .member img {
+        .team-member:hover {
+            transform: scale(1.05); /* 鼠标悬停时放大效果 */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .member-photo {
             width: 100%;
-            height: 100%; 
-            object-fit: cover; /* 保证图片充满容器且不失真 */
+            height: 100%;
+            object-fit: cover; /* 保证图片不会拉伸变形 */
         }
-        .member h4 {
+        .member-info {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* 使文字垂直居中 */
-            color: white;
-            font-size: 20px;
-            margin: 0;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* 给文字加上阴影，使其在背景中更为清晰 */
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明的背景 */
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .member p {
-            font-size: 14px;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* 半透明黑色背景 */
             color: #fff;
-            margin-top: 5px;
-            background-color: rgba(0, 0, 0, 0.5); /* 半透明的背景 */
-            padding: 5px 10px;
-            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0; /* 默认隐藏 */
+            transition: opacity 0.3s ease; /* 添加渐变效果 */
+            text-align: center;
+            padding: 10px;
+        }
+        .team-member:hover .member-info {
+            opacity: 1; /* 鼠标悬停时显示信息 */
+        }
+        .member-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .member-role {
+            font-size: 14px;
         }
          /* 顶层显示预告片和梗概 */
         .top-layer {
@@ -283,29 +294,33 @@
         <h2>工作室简介</h2>
         <p>不止电影工作室是一家致力于创作和推广高质量影视作品的独立制作公司。我们坚信，电影不止是娱乐，更是艺术，更是表达思想、情感和文化的力量。我们的使命是打破传统叙事的界限，探索不同类别</p>
 
-        <div class="members-container">
-            <div class="member">
-                <img src="https://img9.doubanio.com/icon/ul88038496-14.jpg" alt="Nathan Lee" class="profile-img">
-                <h4>李体鑫</h4>
-                <p>创始人、剪辑师</p>
-                <p>擅长精细化剪辑和独立电影的创作，有着多年的项目经验，涉猎范围广泛，包括动作、剧情、悬疑等多个题材。</p>
-                <p>参与作品：《731》、《重生》、《怒潮》、《危机航线》、《关于我妈的一切》、《如影随心》</p>
+        <section class="team-container">
+        <!-- 示例成员 -->
+        <div class="team-member">
+            <img src="https://img9.doubanio.com/icon/ul88038496-14.jpg" alt="成员头像" class="member-photo">
+            <div class="member-info">
+                <div class="member-name">李体鑫</div>
+                <div class="member-role">创始人&剪辑师</div>
+                <p>擅长精细化剪辑和独立电影的创作，主张“剪辑是故事的灵魂”。有着多年的项目经验，涉猎范围广泛，包括动作、剧情、悬疑等多个题材。</p>
+                <p>代表作品：《731》、《重生》、《怒潮》、《危机航线》、《关于我妈的一切》、《如影随心》</p>
             </div>
-
-            <div class="member">
-                <img src="https://via.placeholder.com/250" alt="Member 2" class="profile-img">
-                <h4>闫瑞鹏</h4>
-                <p>剪辑师</p>
-                <p>具备深厚的视觉艺术背景，专注于影像的创意剪辑。他对节奏把控和镜头语言的运用有着敏锐的洞察力。</p>
-                <p>参与作品：《球状闪电》、《消失的孩子》、《中国刑警》、《穿越寒冬拥抱你》、《扫黑》、《温暖的抱抱》、《英格力士》 、《刀背藏身》、《师父》、《闯入者》</p>
+        </div>
+        <div class="team-member">
+            <img src="https://via.placeholder.com/200" alt="成员头像" class="member-photo">
+            <div class="member-info">
+                <div class="member-name">闫瑞鹏</div>
+                <div class="member-role">剪辑师</div>
+                <p>具备深厚的视觉艺术背景，专注于影像的创意剪辑。她对节奏把控和镜头语言的运用有着敏锐的洞察力。</p>
+                <p>代表作品：《球状闪电》、《消失的孩子》、《中国刑警》、《穿越寒冬拥抱你》、《扫黑》、《温暖的抱抱》、《英格力士》 、《刀背藏身》、《师父》、《闯入者》</p>
             </div>
-
-            <div class="member">
-                <img src="https://via.placeholder.com/250" alt="Member 3" class="profile-img">
-                <h4>魏志华</h4>
-                <p>剪辑师</p>
+        </div>
+        <div class="team-member">
+            <img src="https://via.placeholder.com/200" alt="成员头像" class="member-photo">
+            <div class="member-info">
+                <div class="member-name">魏志华</div>
+                <div class="member-role">剪辑师</div>
                 <p>经验丰富的剪辑师，擅长快速高效的剪辑工作，确保项目按时完成，且质量上乘。</p>
-                <p>参与作品：《欢乐颂1、2、3、4、5》《好家伙》、《凡人歌》、《都挺好》、《猎风行动》、《青年医生》</p>
+                <p>代表作品：《欢乐颂1、2、3、4、5》《好家伙》、《凡人歌》、《都挺好》、《猎风行动》、《青年医生》</p>
             </div>
         </div>
     </section>
