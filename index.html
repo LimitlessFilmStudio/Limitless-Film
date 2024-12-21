@@ -97,6 +97,12 @@
             text-decoration: none;
             font-size: 24px;
         }
+        .works-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px; /* 增加间距 */
+        }
         .works-item {
             display: flex;
             flex-direction: column;
@@ -119,19 +125,13 @@
        }
        .works-item {
         flex: 0 0 calc(50% - 10px); /* 每行显示两个作品，宽度为50%减去间距 */
-        margin-bottom: 20px; /* 增加底部间距 */
+        margin-bottom: 10px; /* 增加底部间距 */
         }
         .works-item img {
         width: 100%; /* 调整图片宽度适应容器 */
         height: auto; /* 保持宽高比 */
         }
-        }
-        .works-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            gap: 20px; /* 增加间距 */
-        }
+        }  
         h3.centered {
             text-align: center; /* 让标题居中显示 */
             margin-bottom: 40px; /* 增加行间距 */
