@@ -111,20 +111,21 @@
             height: 450px; /* 调整高度 */
             margin-bottom: 10px;
         }
-/* 媒体查询：针对手机屏幕（宽度小于768px） */
+ /* 媒体查询：针对手机屏幕（宽度小于768px） */
         @media (max-width: 768px) {
-            .works-container {
-                flex-direction: column; /* 改为竖向排列 */
-                align-items: center;   /* 居中显示 */
-            }
-            .works-item {
-                width: 90%; /* 根据屏幕宽度调整 */
-                height: auto; /* 高度自动适配内容 */
-            }
-            .works-item img,
-            .works-item video {
-                height: auto; /* 保持宽高比，适应容器 */
-            ｝
+       .works-container {
+        flex-wrap: wrap; /* 保持内容换行 */
+        justify-content: center; /* 居中显示 */
+       }
+       .works-item {
+        flex: 0 0 calc(50% - 10px); /* 每行显示两个作品，宽度为50%减去间距 */
+        margin-bottom: 20px; /* 增加底部间距 */
+        }
+        .works-item img {
+        width: 100%; /* 调整图片宽度适应容器 */
+        height: auto; /* 保持宽高比 */
+        }
+        }
         .works-container {
             display: flex;
             flex-wrap: wrap;
