@@ -35,6 +35,27 @@
       transform: scale(1.05);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
+    /* 滑动线容器 */
+.navigation-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  background: #666;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dot.active {
+  background: #fff; /* 当前激活的海报按钮高亮 */
+}
 
     /* 循环动画效果 */
     @keyframes slide {
@@ -104,7 +125,18 @@
     <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05cbf0516e36e38f87b726706cf7bc01ea.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer2.mp4"></div>
     <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/friday/4bb2bb42b0dc728b32796d61e035fd83.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer3.mp4"></div>
     <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecdedddddb12d23c230fd57df76f2d15095.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer4.mp4"></div>
+    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecdedd71f0faf2aa230f42484ddc1344c98.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer5.mp4"></div> 
+    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecde33b538070e1311e597a0ec728aa6a0a.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer6.mp4"></div>
   </div>
+  <!-- 滑动线 -->
+<div class="navigation-dots">
+  <span class="dot" data-index="0"></span>
+  <span class="dot" data-index="1"></span>
+  <span class="dot" data-index="2"></span>
+  <span class="dot" data-index="3"></span>
+  <span class="dot" data-index="4"></span>
+  <span class="dot" data-index="5"></span>
+</div>
 
   <!-- 模态框播放预告片 -->
   <div id="modal">
@@ -116,54 +148,100 @@
 
   <script>
     const carousel = document.querySelector('.carousel');
-    const posters = document.querySelectorAll('.movie-poster');
-    const modal = document.getElementById('modal');
-    const video = document.getElementById('trailer');
-    const closeModal = document.getElementById('close-modal');
+const posters = document.querySelectorAll('.movie-poster');
+const dots = document.querySelectorAll('.dot');
+const modal = document.getElementById('modal');
+const video = document.getElementById('trailer');
+const closeModal = document.getElementById('close-modal');
 
-    let offset = 0;
+let offset = 0;
+let autoSlideInterval;
 
-    // 循环移动效果
-    function moveCarousel() {
-      offset = (offset + 1) % posters.length;
-      posters.forEach((poster, index) => {
-        poster.style.transform = `translateX(-${offset * 100}%)`;
-      });
+// 循环移动效果
+function moveCarousel(index = null) {
+  // 如果传入了index参数，则跳转到指定海报
+  if (index !== null) {
+    offset = index;
+  } else {
+    offset = (offset + 1) % posters.length;
+  }
+
+  // 更新海报位置
+  posters.forEach((poster, idx) => {
+    poster.style.transform = `translateX(-${offset * 100}%)`;
+  });
+
+  // 更新滑动线激活状态
+  updateActiveDot();
+}
+
+// 更新滑动线按钮的状态
+function updateActiveDot() {
+  dots.forEach((dot, idx) => {
+    if (idx === offset) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
     }
+  });
+}
 
-    // 设置动画间隔
-    setInterval(moveCarousel, 3000);
+// 自动循环滑动
+function startAutoSlide() {
+  autoSlideInterval = setInterval(() => {
+    moveCarousel();
+  }, 3000);
+}
 
-    // 显示模态框并播放视频
-    function showModal(trailerUrl) {
-      video.src = trailerUrl;
-      modal.style.display = 'flex';
-    }
+// 停止自动滑动
+function stopAutoSlide() {
+  clearInterval(autoSlideInterval);
+}
 
-    // 关闭模态框并清除资源
-    function closeModalHandler() {
-      modal.style.display = 'none';
-      video.pause();
-      video.src = ''; // 清除视频链接，释放资源
-    }
+// 点击滑动线上的按钮切换海报
+dots.forEach((dot) => {
+  dot.addEventListener('click', (event) => {
+    const index = parseInt(event.target.dataset.index);
+    stopAutoSlide(); // 停止自动滑动
+    moveCarousel(index); // 跳转到指定海报
+    startAutoSlide(); // 重新启动自动滑动
+  });
+});
 
-    // 点击空白区域关闭模态框
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) {
-        closeModalHandler();
-      }
-    });
+// 显示模态框并播放视频
+function showModal(trailerUrl) {
+  video.src = trailerUrl;
+  modal.style.display = 'flex';
+}
 
-    // 点击关闭按钮关闭模态框
-    closeModal.addEventListener('click', closeModalHandler);
+// 关闭模态框并清除资源
+function closeModalHandler() {
+  modal.style.display = 'none';
+  video.pause();
+  video.src = ''; // 清除视频链接，释放资源
+}
 
-    // 点击电影海报打开模态框
-    posters.forEach((poster) => {
-      poster.addEventListener('click', () => {
-        const trailer = poster.dataset.trailer;
-        showModal(trailer);
-      });
-    });
+// 点击空白区域关闭模态框
+modal.addEventListener('click', (event) => {
+  if (event.target === modal) {
+    closeModalHandler();
+  }
+});
+
+// 点击关闭按钮关闭模态框
+closeModal.addEventListener('click', closeModalHandler);
+
+// 点击电影海报打开模态框
+posters.forEach((poster) => {
+  poster.addEventListener('click', () => {
+    const trailer = poster.dataset.trailer;
+    showModal(trailer);
+  });
+});
+
+// 初始化页面
+moveCarousel(0); // 默认展示第一个海报
+startAutoSlide(); // 开始自动循环
   </script>
 </body>
 </html>
