@@ -31,20 +31,46 @@ body {
   box-sizing: border-box;
 }
 
+/* 单个电影项容器 */
+.movie-item {
+  display: flex;
+  align-items: center;
+  flex: 0 0 50%; /* 每个电影项占50%宽度 */
+  margin: 0 10px; /* 海报之间空隙 */
+  transition: transform 1s ease-in-out;
+}
+
 /* 单个海报样式 */
 .movie-poster {
-  flex: 0 0 25%;
-  height: 100%; /* 调整高度让间距更明显 */
-  margin: 0 10px; /* 增加海报之间的空隙 */
+  flex: 0 0 40%; /* 海报占40%的宽度 */
+  height: 80%; /* 调整高度让间距更明显 */
+  margin-right: 15px; /* 与信息部分的空隙 */
   background-size: cover;
   background-position: center;
   border-radius: 10px; /* 增加圆角 */
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* 增加阴影效果 */
-  transition: transform 1s ease-in-out;
 }
 
-/* 当前海报放大效果（可选，增强视觉表现） */
-.movie-poster.active {
+/* 电影信息样式 */
+.movie-info {
+  flex: 0 0 60%; /* 信息占60%的宽度 */
+  color: #fff;
+}
+
+.movie-info h3 {
+  margin: 0;
+  font-size: 20px;
+  text-align: left;
+}
+
+.movie-info p {
+  margin: 5px 0 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+/* 当前海报放大效果（可选） */
+.movie-item.active .movie-poster {
   transform: scale(1.05); /* 当前显示的海报稍微放大 */
   z-index: 1;
 }
@@ -115,9 +141,19 @@ body {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+  .movie-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
   .movie-poster {
-    flex: 0 0 50%;
-    margin: 0 5px;
+    width: 80%;
+    margin: 0 0 10px;
+  }
+
+  .movie-info {
+    width: 100%;
   }
 
   .modal-content {
