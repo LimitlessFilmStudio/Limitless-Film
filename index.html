@@ -34,7 +34,7 @@ body {
 /* 单个电影项容器 */
 .movie-item {
   display: flex;
-  align-items: center;
+  align-items: center; /* 垂直方向居中 */
   flex: 0 0 50%; /* 每个电影项占50%宽度 */
   margin: 0 10px; /* 海报之间空隙 */
   transition: transform 1s ease-in-out;
@@ -43,7 +43,8 @@ body {
 /* 单个海报样式 */
 .movie-poster {
   flex: 0 0 40%; /* 海报占40%的宽度 */
-  height: 80%; /* 调整高度让间距更明显 */
+  width: 100%; /* 或者固定宽度 */
+  height: auto; /* 或者固定高度 */
   margin-right: 15px; /* 与信息部分的空隙 */
   background-size: cover;
   background-position: center;
@@ -55,20 +56,14 @@ body {
 .movie-info {
   flex: 0 0 60%; /* 信息占60%的宽度 */
   color: #fff;
+  text-align: left; /* 左对齐内容 */
 }
 
-.movie-info h3 {
-  margin: 0;
-  font-size: 20px;
-  text-align: left;
-}
-
+.movie-info h3,
 .movie-info p {
-  margin: 5px 0 0;
-  font-size: 16px;
-  text-align: left;
+  margin: 10px 0; /* 文字之间保持间距 */
+  font-size: 18px; /* 调整合适字体 */
 }
-
 /* 当前海报放大效果（可选） */
 .movie-item.active .movie-poster {
   transform: scale(1.05); /* 当前显示的海报稍微放大 */
