@@ -25,7 +25,7 @@ body {
   align-items: center;
   position: relative;
   width: 100%;
-  height: 1000px;
+  height: 600px;
   overflow: hidden;
   margin: auto;
   box-sizing: border-box;
@@ -33,9 +33,9 @@ body {
 
 /* 单个电影项容器 */
 .movie-item {
+  flex: 0 0 auto; /* 防止宽度比例受限制 */
   display: flex;
   align-items: center; /* 垂直方向居中 */
-  flex: 0 0 50%; /* 每个电影项占50%宽度 */
   margin: 0 10px; /* 海报之间空隙 */
   transition: transform 1s ease-in-out;
 }
@@ -160,7 +160,7 @@ body {
 </head>
 <body>
   <!-- 电影海报展示区 -->
-  <div class="carousel">
+  <div class="carousel" style="transform: translateX(0);">
   <div class="movie-item">
     <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4"></div>
     <div class="movie-info">
@@ -296,23 +296,17 @@ function closeModalHandler() {
   video.pause();
   video.src = ''; // 清除视频链接，释放资源
 }
-function moveCarousel(index = null) {
+    function moveCarousel(index = null) {
   if (index !== null) {
     offset = index;
   } else {
     offset = (offset + 1) % posters.length;
   }
 
-  posters.forEach((poster, idx) => {
-    poster.style.transform = `translateX(-${offset * 100}%)`;
-    if (idx === offset) {
-      poster.classList.add('active'); // 当前海报添加 `active` 类
-    } else {
-      poster.classList.remove('active'); // 其他海报移除 `active` 类
-    }
-  });
+  // 更新整个轮播容器的位置
+  carousel.style.transform = `translateX(-${offset * 100}%)`;
 
-  updateActiveDot();
+  updateActiveDot(); // 更新滑动线按钮状态
 }
 // 点击空白区域关闭模态框
 modal.addEventListener('click', (event) => {
