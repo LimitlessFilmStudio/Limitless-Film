@@ -3,584 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Limitless Film Studio</title>
+  <title>电影海报居中显示</title>
   <style>
-    /* 基础样式重置 */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* 页面整体居中 */
     body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #333;
-      padding: 20px;
-      text-align: center;
-    }
-    /* 顶部右侧菜单样式 */
-    .top-right-menu {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      border-radius: 5px;
-      padding: 10px;
-      z-index: 1000;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    .top-right-menu.hidden {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    .top-right-menu ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 10px;
-    }
-    .top-right-menu ul li {
-      display: inline-block;
-    }
-    .top-right-menu ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      padding: 5px 10px;
-      border-radius: 3px;
-      transition: background-color 0.3s ease;
-    }
-    .top-right-menu ul li a:hover {
-      background-color: #fff;
-      color: red;
-    }
-    /* 页头样式 */
-    .header-with-slider {
-      position: relative;
-      height: 400px;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      animation: slideShow 15s infinite;
-    }
-    /* 动画：更改背景图 */
-@keyframes slideShow {
-  0% { background-image: url('https://thumbnail1.baidupcs.com/thumbnail/a02f1b0d4h4c2f45f9230532d5edbe51?fid=2666507282-250528-330264965322818&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-5yMa%2fRvL9wtXf5gkv1dvaS%2bT2iw%3d&expires=8h&chkbd=0&chkv=0&dp-logid=278310561048228237&dp-callid=0&time=1735138800&size=c1680_u1050&quality=90&vuk=2666507282&ft=image&autopolicy=1'); }
-  33% { background-image: url('https://thumbnail1.baidupcs.com/thumbnail/45bb4611ele7bb1225b33ad2181788f2?fid=2666507282-250528-521932895651217&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-ZDPODaWNdD%2fLiKp1vA0%2fX%2fj78Lk%3d&expires=8h&chkbd=0&chkv=0&dp-logid=278310561048228237&dp-callid=0&time=1735138800&size=c1680_u1050&quality=90&vuk=2666507282&ft=image&autopolicy=1'); }
-  66% { background-image: url('https://thumbnail1.baidupcs.com/thumbnail/1f2c5908ei81be0af99998703e777f79?fid=2666507282-250528-202394494797895&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-M8hCSzsyYHNFttXzDWVc0XjQvoQ%3d&expires=8h&chkbd=0&chkv=0&dp-logid=278310561048228237&dp-callid=0&time=1735138800&size=c1680_u1050&quality=90&vuk=2666507282&ft=image&autopolicy=1'); }
-  100% { background-image: url('https://thumbnail1.baidupcs.com/thumbnail/5595571cdu97bbc42d3e3c732080b924?fid=2666507282-250528-2963332244133&rt=pr&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-Y8H4FsZXrbIJzENyYh3Yh3x%2fMhY%3d&expires=8h&chkbd=0&chkv=0&dp-logid=278863354376254034&dp-callid=0&time=1735138800&size=c1680_u1050&quality=90&vuk=2666507282&ft=image&autopolicy=1'); }
-}
-    /* 文本样式 */
-    .header-with-slider h1 {
-      margin: 0;
-      font-size: 32px;
-      font-weight: bold;
-      z-index: 1;
-      font-size: 24px;
-      margin-top: 30px;
-      margin-bottom: 20px;
-      letter-spacing: 10px; /* 字母间距，单位可以是px、em等 */
-      color: #CD0000;
-
-    }
-    .header-with-slider h2 {
-      font-size: 12px;
-      margin-bottom: 10px;
-      letter-spacing: 5px; /* 字母间距，单位可以是px、em等 */
-      color: #CD0000;
-    }
-    .header-with-slider h3 {
-      font-size: 12px;
-      margin-bottom: 10px;
-      letter-spacing: 8px; /* 字母间距，单位可以是px、em等 */
-      color: #CD0000;
-    }
-    .header-with-slider p {
-      font-size: 12px;
-      color: #CD0000;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      letter-spacing: 5px; /* 字母间距，单位可以是px、em等 */
-    }
-    /* 容器样式 */
-    .container {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      max-width: 2000px;
-      margin: 20px auto;
-      flex-wrap: wrap;
-    }
-
-    /* 每一层样式 */
-    .layer {
-      flex: 1 1 calc(33.333% - 20px);
-      background: #333;
-      border: 1px solid #333;
-      border-radius: 2px;
-      padding: 15px;
-      box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      margin-top: 40px;
-    }
-
-    .layer:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .layer h2 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .layer p {
-      font-size: 14px;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-
-    .movie-item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .movie-item img {
-      display: block;
-      width: 50%;
-      height: auto;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-left: 0; /* 确保贴合左侧 */
-    }
-
-    .movie-info {
-      color: #fff;
-      text-align: left;
-    }
-
-    .movie-info p {
-      margin-bottom: 8px; 
-    }
-    
-    /* 弹出窗口样式 */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80%;
-      max-width: 600px;
       background: #000;
-      color: #333;
-      padding: 0px;
-      border-radius: 0px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
+      color: #fff;
+      overflow-x: hidden;
     }
+    /* 使海报页面居中显示并增加错位空隙 */
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  margin: auto;
+  box-sizing: border-box;
+}
 
-    .modal iframe {
-      width: 100%;
-      height: 300px;
-      border: none;
-    }
+/* 单个海报样式 */
+.movie-poster {
+  flex: 0 0 25%;
+  height: 80%; /* 调整高度让间距更明显 */
+  margin: 0 10px; /* 增加海报之间的空隙 */
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px; /* 增加圆角 */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* 增加阴影效果 */
+  transition: transform 1s ease-in-out;
+}
 
-    /* 背景遮罩层 */
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 999;
-    }
-     /* 页脚样式 */
-    footer {
-        background: #333;
-        color: #fff;
-        text-align: center;
-        padding: 20px 0;
-        margin-top: 20px;
-        font-size: 14px;
-    }
-    footer p {
-        margin: 5px 0;
-    }
-    /* 页脚探索更多样式 */
-    .more {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 20px 0;
-        margin-top: 5px;
-    }
-    .more h3 {
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: #fff; /* 可根据需要修改颜色 */
-    }
-    .more ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .more ul li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-    .more ul li a {
-       color: #fff;
-       text-decoration: none;
-       font-size: 12px;
-    }
-    .more ul li a:hover {
-       color: red; /* 鼠标悬停颜色 */
-    }
-    
-    /* 响应式布局 */
-    @media screen and (max-width: 768px) {
-    .container {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .header-with-slider {
-      margin-top: 20px;
-      height: 200px;
-    }
+/* 当前海报放大效果（可选，增强视觉表现） */
+.movie-poster.active {
+  transform: scale(1.05); /* 当前显示的海报稍微放大 */
+  z-index: 1;
+}
 
-    .header-with-slider h1 {
-      font-size: 24px;
-      letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
-    }
-    .header-with-slider h2 {
-      letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
-    }
-    .header-with-slider h3 {
-      letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
-    }
-    .header-with-slider p {
-      font-size: 10px;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
-    }
-    .slider-dots .dot {
-      width: 10px;
-      height: 10px;
-    }  
-    .layer {
-      flex: 1 1 calc(33.333% - 20px);
-      margin-bottom: 10px;
-    }
-    .layer h2 {
-      font-size: 10px;
-    }
+/* 滑动线容器 */
+.navigation-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
 
-    .layer p {
-      font-size: 8px;
-      margin-bottom: 5px;
-    }
-    .movie-info p {
-      font-size: 6px;
-      margin-bottom: 3px;
-    }
-    .movie-item {
-      flex-direction: column;
-      align-items: center;
-    }
-    .movie-item img {
-      width: 100%;
-      height: auto;
-      margin-left: 0; /* 确保贴合左侧 */
-    }
-    .more ul li {
-      display: block;
-      margin: 5px 0;
-    }
-    .top-right-menu {
-      right: 5px;
-      top: 5px;
-      padding: 5px;
-    }
-    .top-right-menu ul {
-      flex-direction: row;
-      gap: 2px;
-    }
-    }   
-  </style>
-</head>
-  
-<body>
-  <header class="header-with-slider">
-    <h3>Limitless Film Studio</h3>
-    <h1>不止电影工作室</h1>
-    <h2>光影不止，梦想不息</h2>
-    <p>不止电影工作室，以电影赋予艺术生命，用极致影像打动心灵。我们团队深耕电影与电视剧创作，经验丰富，热爱突破，不止于当下，只为呈现每一帧的震撼与奇迹。</p>
-    <div class="slider-dots">
-       <span onclick="changeImage(0)" class="dot active"></span>
-       <span onclick="changeImage(1)" class="dot"></span>
-       <span onclick="changeImage(2)" class="dot"></span>
-  </div>
-  </header>
-  <div class="container">
-    <!-- 第一层 -->
-    <div class="layer">
-      <h2>Nathan Lee</h2>
-      <p>创始人 & 剪辑指导</p><p>秉持“剪辑是故事灵魂”的理念，精通犯罪、动作、剧情等题材，以画面承载情感，用剪辑塑造力量。</p>
-      <p>参与作品：</p>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4">
-        <div class="movie-info"> 
-          <p><strong>电影：</strong>危机航线</p>
-          <p><strong>导演：</strong>彭顺</p>
-          <p><strong>上映日期：</strong>2024-9-30</p>
-          <p><strong>总票房：</strong>3亿人民币</p> 
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05cbf0516e36e38f87b726706cf7bc01ea.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/eb2fe23b1397757890956248912/v.f42905.mp4">
-        <div class="movie-info">  
-          <p><strong>电影：</strong>重生</p>
-          <p><strong>导演：</strong>马浴柯</p>
-          <p><strong>上映日期：</strong>2024-8-16</p>
-          <p><strong>总票房：</strong>4.64亿人民币</p> 
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/friday/4bb2bb42b0dc728b32796d61e035fd83.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/16d41d183270835013807942221/v.f42905.mp4">
-        <div class="movie-info"> 
-          <p><strong>电影：</strong>怒潮</p>
-          <p><strong>导演：</strong>马浴柯</p>
-          <p><strong>上映日期：</strong>2023-12-16</p>
-          <p><strong>总票房：</strong>2.29亿人民币</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecdedddddb12d23c230fd57df76f2d15095.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/50d7e0b83701925923902310317/v.f42905.mp4">
-        <div class="movie-info">
-          <p><strong>电影：</strong>关于我妈的一切</p>
-          <p><strong>导演：</strong>赵天宇</p>
-          <p><strong>上映日期：</strong>2021-9-19</p>
-          <p><strong>总票房：</strong>1.5亿人民币</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecdedd71f0faf2aa230f42484ddc1344c98.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fe5b84bcvodcq1251246104/0700073d5285890796585235953/f0.mp4">
-        <div class="movie-info">  
-          <p><strong>电影：</strong>如影随心</p>
-          <p><strong>导演：</strong>霍建起</p>
-          <p><strong>上映日期：</strong>2019-04-19</p>
-          <p><strong>总票房：</strong>2367.8万人民币</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecde33b538070e1311e597a0ec728aa6a0a.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fe5b84bcvodcq1251246104/c61db4205285890796584798340/f0.mp4">
-        <div class="movie-info">   
-          <p><strong>电影：</strong>父子雄兵</p>
-          <p><strong>导演：</strong>袁卫东</p>
-          <p><strong>上映日期：</strong>2017-07-21</p>
-          <p><strong>总票房：</strong>1.25亿人民币</p>
-        </div>
-      </div>
-    </div>
+.dot {
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  background: #666;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-    <!-- 第二层 -->
-    <div class="layer">
-      <h2>闫瑞鹏</h2>
-      <p>剪辑师</p>
-      <p>深耕影视艺术，专注创意剪辑，擅长精确把控节奏与镜头语言，洞察影像的每一细节。</p>
-      <p>参与作品：</p>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/friday/90f223d3357e2dab7b65b68917151303.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/991567ae387702293201758081/v.f42905.mp4">
-        <div class="movie-info">
-          <p><strong>电影：</strong>穿过寒冬拥抱你</p>
-          <p><strong>导演：</strong>薛晓路</p>
-          <p><strong>上映日期：</strong>2021-12-31</p>
-          <p><strong>总票房：</strong>9.36亿人民币</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecdeddddd06d395b57e2fc86c660f07d7e2.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/71aa3f625285890817416165010/v.f42905.mp4">
-        <div class="movie-info">
-          <p><strong>电影：</strong>扫黑·决战</p>
-          <p><strong>导演：</strong>吕聿来</p>
-          <p><strong>上映日期：</strong>2021-5-1</p>
-          <p><strong>总票房：</strong>4.05亿人民币</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecdedd51b7e192578d33f4a48567fd003c1.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/01e0ac065213833187215524984/v.f42906.mp4">
-        <div class="movie-info">
-          <p><strong>电影：</strong>温暖的抱抱</p>
-          <p><strong>导演：</strong>常远</p>
-          <p><strong>上映日期：</strong>2020-12-31</p>
-          <p><strong>总票房：</strong>8.64亿人民币</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecdedd87ae7a50c8030c79417261ce19333.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fe5b84bcvodcq1251246104/9eafcb395285890796587142932/f0.mp4">
-        <div class="movie-info">
-          <p><strong>电影：</strong>捉妖记2</p>
-          <p><strong>导演：</strong>许诚毅</p>
-          <p><strong>上映日期：</strong> 2018-02-16</p>
-          <p><strong>总票房：</strong>22.37亿人民币</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecdedd87a06d7a3571f70c0c0c399683f3e.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vt1.doubanio.com/202412222152/5f43a43493992d64fb8ebfcdc32c1590/view/movie/M/301870551.mp4">
-        <div class="movie-info">
-          <p><strong>电影：</strong>师父</p>
-          <p><strong>导演：</strong>徐浩峰</p>
-          <p><strong>上映日期：</strong> 2015-12-10</p>
-          <p><strong>总票房：</strong>5479.3万人民币</p>
-        </div>
-      </div>
-    </div>
+.dot.active {
+  background: #fff;
+}
 
-    <!-- 第三层 -->
-    <div class="layer">
-      <h2>魏志华</h2>
-      <p>剪辑师</p>
-      <p>经验丰富的剪辑师，擅长高效剪辑，确保项目按时完成并保持卓越质量。</p>
-      <p>参与作品：</p>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/mmdb/fb738692ddd51b339ebe2a2b83987629bd4bd.jpeg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/60224df81253642695785671688/v.f42906.mp4">
-        <div class="movie-info">
-          <p><strong>网剧：</strong>凡人歌</p>
-          <p><strong>导演：</strong>简川訸</p>
-          <p><strong>首播日期：</strong>2024-08-31</p>
-          <p><strong>集数：</strong>37</p>
-          <p><strong>单集片长：</strong>45分钟</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/mmdb/54ecde9a2ff5bff0ee230f6ab6b1ca08f20aa.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/c5f1ef201397757886974640484/v.f42906.mp4">
-        <div class="movie-info">
-          <p><strong>网剧：</strong>欢乐颂5</p>
-          <p><strong>导演：</strong>简川訸</p>
-          <p><strong>首播日期：</strong>2024-03-16</p>
-          <p><strong>集数：</strong>34</p>
-          <p><strong>单集片长：</strong>45分钟</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecdedd71f02faf3351ba55184868c84fa07.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fe5b84bcvodcq1251246104/7d5e7ca05285890796583933494/f0.mp4">
-        <div class="movie-info">
-          <p><strong>网剧：</strong>都挺好</p>
-          <p><strong>导演：</strong>简川訸</p>
-          <p><strong>首播日期：</strong>2019-03-01</p>
-          <p><strong>集数：</strong>46</p>
-          <p><strong>单集片长：</strong>45分钟</p>
-        </div>
-      </div>
-      <div class="movie-item">
-        <img src="https://p0.pipi.cn/basicdata/54ecde338eac6992570faf722098f71b51c0c.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer=" ">
-        <div class="movie-info">
-          <p><strong>网剧：</strong>好家伙</p>
-          <p><strong>导演：</strong>简川訸</p>
-          <p><strong>首播日期：</strong>2016-09-26</p>
-          <p><strong>集数：</strong>45</p>
-          <p><strong>单集片长：</strong>42分钟</p>
-        </div>
-      </div>
-    </div>
-  </div>
+/* 模态框样式 */
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  display: none;
+}
 
-  <!-- 背景遮罩层 -->
-  <div class="overlay"></div>
+.modal-content {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  background: #000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
 
-  <!-- 弹出窗口 -->
-  <div class="modal">
-    <iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  </div>
-  <div class="top-right-menu">
-  <ul>
-    <li><a href="#footer-contact">联系方式</a></li>
-    <li><a href="#more">探索更多</a></li>
-  </ul>
-</div>
+#trailer {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
 
-<footer id="footer-contact">
-  <p>© 2024 Limitless Film Studio</p>
-  <p>联系方式：ednathan@foxmail.com | 微信+电话：李生 178-9609-7228| 微信+电话：闫生 185-1405-0716</p>
-</footer>
+#close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-<div id="more" class="more">  
-  <h3>探索更多</h3>
-  <ul>
-    <li><a href="https://www.provideocoalition.com" target="_blank">Provideocoalition</a></li>
-    <li><a href="https://www.avid.com" target="_blank">AVID</a></li>
-    <li><a href="https://movie.douban.com" target="_blank">豆瓣电影</a></li>
-    <li><a href="https://www.gyg.la" target="_blank">观影</a></li>
-  </ul>
-</div>
-  <script>
-    // JavaScript: 弹出预告片功能
-    document.addEventListener("DOMContentLoaded", () => {
-  const images = document.querySelectorAll(".layer img");
-  const modal = document.querySelector(".modal");
-  const overlay = document.querySelector(".overlay");
-  const iframe = modal.querySelector("iframe");
-  const menu = document.getElementById("topMenu"); // 获取菜单元素
-  let lastScrollY = window.scrollY; // 保存上一次滚动位置
-
-const header = document.querySelector('.header-with-slider');
-  const images = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
-  let index = 0;
-
-  function changeBackground() {
-    index = (index + 1) % images.length;
-    header.style.backgroundImage = `url(${images[index]})`;
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .movie-poster {
+    flex: 0 0 50%;
+    margin: 0 5px;
   }
 
-  // 每5秒切换一次背景图
-  setInterval(changeBackground, 5000);
-  // 点击海报显示预告片
-  images.forEach((img) => {
-    img.addEventListener("click", () => {
-      const trailerUrl = img.getAttribute("data-trailer");
-      iframe.src = trailerUrl;
-      modal.style.display = "block";
-      overlay.style.display = "block";
-    });
-  });
+  .modal-content {
+    width: 90%;
+    height: 50%;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="carousel">
+    <div class="movie-poster" style="background-image: url('poster1.jpg')" data-trailer="trailer1.mp4"></div>
+    <div class="movie-poster" style="background-image: url('poster2.jpg')" data-trailer="trailer2.mp4"></div>
+    <div class="movie-poster" style="background-image: url('poster3.jpg')" data-trailer="trailer3.mp4"></div>
+    <div class="movie-poster" style="background-image: url('poster4.jpg')" data-trailer="trailer4.mp4"></div>
+  </div>
+  <div class="navigation-dots">
+    <span class="dot" data-index="0"></span>
+    <span class="dot" data-index="1"></span>
+    <span class="dot" data-index="2"></span>
+    <span class="dot" data-index="3"></span>
+  </div>
+  <div id="modal">
+    <div class="modal-content">
+      <video id="trailer" controls autoplay></video>
+      <button id="close-modal">关闭</button>
+    </div>
+  </div>
+  <script>
+    const carousel = document.querySelector('.carousel');
+    const posters = document.querySelectorAll('.movie-poster');
+    const dots = document.querySelectorAll('.dot');
+    const modal = document.getElementById('modal');
+    const video = document.getElementById('trailer');
+    const closeModal = document.getElementById('close-modal');
 
-  // 点击遮罩层关闭预告片
-  overlay.addEventListener("click", () => {
-    modal.style.display = "none";
-    overlay.style.display = "none";
-    iframe.src = ""; // 停止播放
-  });
+    let offset = 0;
+    let autoSlideInterval;
 
-  // 滚动时动态显示或隐藏菜单
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
+    function moveCarousel(index = null) {
+  if (index !== null) {
+    offset = index;
+  } else {
+    offset = (offset + 1) % posters.length;
+  }
 
-    if (currentScrollY > lastScrollY && currentScrollY > 50) {
-      // 向下滚动且页面已滚动一定距离时隐藏菜单
-      menu.classList.add("hidden");
+  posters.forEach((poster, idx) => {
+    poster.style.transform = `translateX(-${offset * 100}%)`;
+    if (idx === offset) {
+      poster.classList.add('active'); // 当前海报添加 `active` 类
     } else {
-      // 向上滚动或页面在顶部时显示菜单
-      menu.classList.remove("hidden");
+      poster.classList.remove('active'); // 其他海报移除 `active` 类
+    }
+  });
+
+  updateActiveDot();
+}
+
+    function updateActiveDot() {
+      dots.forEach((dot, idx) => {
+        if (idx === offset) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
     }
 
-    lastScrollY = currentScrollY; // 更新上一次滚动位置
-  });
-});
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(() => {
+        moveCarousel();
+      }, 3000);
+    }
+
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', (event) => {
+        const index = parseInt(event.target.dataset.index);
+        stopAutoSlide();
+        moveCarousel(index);
+        startAutoSlide();
+      });
+    });
+
+    function showModal(trailerUrl) {
+      video.src = trailerUrl;
+      modal.style.display = 'flex';
+    }
+
+    function closeModalHandler() {
+      modal.style.display = 'none';
+      video.pause();
+      video.src = '';
+    }
+
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        closeModalHandler();
+      }
+    });
+
+    closeModal.addEventListener('click', closeModalHandler);
+
+    posters.forEach((poster) => {
+      poster.addEventListener('click', () => {
+        const trailer = poster.dataset.trailer;
+        showModal(trailer);
+      });
+    });
+
+    moveCarousel(0);
+    startAutoSlide();
   </script>
 </body>
 </html>
