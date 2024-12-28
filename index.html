@@ -6,134 +6,120 @@
   <title>Limitless Film Studio</title>
   <style>
     /* 页面整体居中 */
+/* 全局样式 */
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; /* 让滑动线和海报垂直排列 */
-  min-height: 100vh; /* 占满视口高度 */
   margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
-  background: #333;
+  background: #121212;
   color: #fff;
   overflow-x: hidden;
 }
-/* 使海报页面居中显示并增加错位空隙 */
+
+/* 轮播容器 */
+.carousel-container {
+  position: relative;
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+}
+
+/* 轮播 */
 .carousel {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 100%;
-  height: 600px;
-  overflow: hidden;
-  margin: auto;
-  box-sizing: border-box;
+  transition: transform 0.5s ease-in-out;
+  width: 300%;
 }
 
-/* 单个电影项容器 */
+/* 单个电影项 */
 .movie-item {
-  flex: 0 0 auto; /* 防止宽度比例受限制 */
+  flex: 0 0 100%;
   display: flex;
-  align-items: center; /* 垂直方向居中 */
-  margin: 0 10px; /* 海报之间空隙 */
-  transition: transform 1s ease-in-out;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
-/* 单个海报样式 */
+/* 电影海报 */
 .movie-poster {
-  flex: 0 0 40%; /* 海报占40%的宽度 */
-  width: 100%; /* 或者固定宽度 */
-  height: auto; /* 或者固定高度 */
-  margin-right: 15px; /* 与信息部分的空隙 */
+  width: 40%;
+  height: 300px;
   background-size: cover;
   background-position: center;
-  border-radius: 10px; /* 增加圆角 */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* 增加阴影效果 */
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  margin-right: 20px;
 }
 
-/* 电影信息样式 */
+/* 电影信息 */
 .movie-info {
-  flex: 0 0 60%; /* 信息占60%的宽度 */
-  color: #fff;
-  text-align: left; /* 左对齐内容 */
+  width: 50%;
 }
 
-.movie-info h3,
+.movie-info h3 {
+  margin: 10px 0;
+  font-size: 24px;
+}
+
 .movie-info p {
-  margin: 10px 0; /* 文字之间保持间距 */
-  font-size: 18px; /* 调整合适字体 */
-}
-/* 当前海报放大效果（可选） */
-.movie-item.active .movie-poster {
-  transform: scale(1.05); /* 当前显示的海报稍微放大 */
-  z-index: 1;
+  margin: 5px 0;
+  font-size: 18px;
 }
 
-/* 滑动线容器 */
-.navigation-dots {
+/* 滑动线按钮 */
+.dots {
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-top: 10px;
 }
 
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 12px;
+  height: 12px;
   margin: 0 5px;
-  background: #666;
   border-radius: 50%;
+  background: #ccc;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
 .dot.active {
   background: #fff;
 }
 
-/* 模态框样式 */
+/* 模态框 */
 #modal {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
-  display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(10px);
-  z-index: 10;
-  display: none;
+  z-index: 1000;
 }
 
-.modal-content {
-  position: relative;
-  width: 80%;
-  height: 80%;
-  background: #000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-}
-
-#trailer {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
+#modal video {
+  max-width: 80%;
+  max-height: 80%;
 }
 
 #close-modal {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #fff;
+  top: 20px;
+  right: 20px;
+  background: #ff0000;
+  color: #fff;
   border: none;
-  padding: 5px 10px;
-  cursor: pointer;
+  padding: 10px 20px;
   font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
 }
-
 /* 响应式设计 */
 @media (max-width: 768px) {
   .movie-item {
@@ -159,51 +145,68 @@ body {
   </style>
 </head>
 <body>
-  <!-- 电影海报展示区 -->
-  <div class="carousel" style="transform: translateX(0);">
-  <div class="movie-item">
-    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4"></div>
-    <div class="movie-info">
-      <h3>危机航线</h3>
-      <p>导演：彭顺</p>
+  <!-- 轮播容器 -->
+  <div class="carousel-container">
+    <div class="carousel">
+      <div class="movie-item">
+        <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4"></div>
+        <div class="movie-info">
+          <h3>危机航线</h3>
+          <p>导演：彭顺</p>
+        </div>
+      </div>
+      <div class="movie-item">
+        <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05cbf0516e36e38f87b726706cf7bc01ea.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer2.mp4"></div>
+        <div class="movie-info">
+          <h3>重生</h3>
+          <p>导演：马浴柯</p>
+        </div>
+      </div>
+      <div class="movie-item">
+        <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/friday/4bb2bb42b0dc728b32796d61e035fd83.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer3.mp4"></div>
+        <div class="movie-info">
+          <h3>怒潮</h3>
+          <p>导演：马浴柯</p>
+        </div>
+      </div>
+      <div class="movie-item">
+        <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecdedddddb12d23c230fd57df76f2d15095.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer3.mp4"></div>
+        <div class="movie-info">
+          <h3>关于我妈的一切</h3>
+          <p>导演：赵天宇</p>
+        </div>
+      </div>
+      <div class="movie-item">
+        <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecdedd71f0faf2aa230f42484ddc1344c98.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer3.mp4"></div>
+        <div class="movie-info">
+           <h3>如影随心</h3>
+           <p>导演：霍建启</p>
+        </div>
+      </div>
+      <div class="movie-item">
+        <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecde33b538070e1311e597a0ec728aa6a0a.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer3.mp4"></div>
+        <div class="movie-info">
+          <h3>父子雄兵</h3>
+          <p>导演：袁卫东</p>
+        </div>
+      </div>
+    </div>
+    <!-- 滑动线按钮 -->
+    <div class="dots">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
     </div>
   </div>
-  <div class="movie-item">
-    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05cbf0516e36e38f87b726706cf7bc01ea.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer2.mp4"></div>
-    <div class="movie-info">
-      <h3>重生</h3>
-      <p>导演：马浴柯</p>
-    </div>
+
+  <!-- 模态框 -->
+  <div id="modal">
+    <video id="trailer" controls></video>
+    <button id="close-modal">关闭</button>
   </div>
-  <div class="movie-item">
-    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/friday/4bb2bb42b0dc728b32796d61e035fd83.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer3.mp4"></div>
-    <div class="movie-info">
-      <h3>怒潮</h3>
-      <p>导演：马浴柯</p>
-    </div>
-  </div>
-  <div class="movie-item">
-    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecdedddddb12d23c230fd57df76f2d15095.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer4.mp4"></div>
-    <div class="movie-info">
-      <h3>关于我妈的一切</h3>
-      <p>导演：赵天宇</p>
-    </div>
-  </div>
-  <div class="movie-item">
-    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecdedd71f0faf2aa230f42484ddc1344c98.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer5.mp4"></div> 
-    <div class="movie-info">
-      <h3>如影随心</h3>
-      <p>导演：霍建启</p>
-    </div>
-  </div>
-  <div class="movie-item">
-    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/basicdata/54ecde33b538070e1311e597a0ec728aa6a0a.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer6.mp4"></div>
-    <div class="movie-info">
-      <h3>父子雄兵</h3>
-      <p>导演：袁卫东</p>
-    </div>
-  </div>
-</div>
+
+  <script src="script.js"></script>
+</body>
   <!-- 滑动线 -->
 <div class="navigation-dots">
   <span class="dot" data-index="0"></span>
@@ -224,111 +227,83 @@ body {
 
   <script>
     const carousel = document.querySelector('.carousel');
-const posters = document.querySelectorAll('.movie-poster');
+const items = document.querySelectorAll('.movie-item');
 const dots = document.querySelectorAll('.dot');
 const modal = document.getElementById('modal');
 const video = document.getElementById('trailer');
 const closeModal = document.getElementById('close-modal');
 
-let offset = 0;
+let currentIndex = 0;
 let autoSlideInterval;
 
-// 循环移动效果
+// 更新轮播位置
 function moveCarousel(index = null) {
-  // 如果传入了index参数，则跳转到指定海报
   if (index !== null) {
-    offset = index;
+    currentIndex = index; // 跳转到指定索引
   } else {
-    offset = (offset + 1) % posters.length;
+    currentIndex = (currentIndex + 1) % items.length; // 循环到下一个
   }
-
-  // 更新海报位置
-  posters.forEach((poster, idx) => {
-    poster.style.transform = `translateX(-${offset * 100}%)`;
-  });
-
-  // 更新滑动线激活状态
+  const offset = -currentIndex * 100; // 计算位移
+  carousel.style.transform = `translateX(${offset}%)`;
   updateActiveDot();
 }
 
-// 更新滑动线按钮的状态
+// 更新激活状态
 function updateActiveDot() {
   dots.forEach((dot, idx) => {
-    if (idx === offset) {
-      dot.classList.add('active');
-    } else {
-      dot.classList.remove('active');
-    }
+    dot.classList.toggle('active', idx === currentIndex);
   });
 }
 
-// 自动循环滑动
+// 自动轮播
 function startAutoSlide() {
   autoSlideInterval = setInterval(() => {
     moveCarousel();
   }, 3000);
 }
 
-// 停止自动滑动
+// 停止自动轮播
 function stopAutoSlide() {
   clearInterval(autoSlideInterval);
 }
 
-// 点击滑动线上的按钮切换海报
+// 滑动线按钮点击事件
 dots.forEach((dot) => {
   dot.addEventListener('click', (event) => {
     const index = parseInt(event.target.dataset.index);
-    stopAutoSlide(); // 停止自动滑动
-    moveCarousel(index); // 跳转到指定海报
-    startAutoSlide(); // 重新启动自动滑动
+    stopAutoSlide();
+    moveCarousel(index);
+    startAutoSlide();
   });
 });
 
-// 显示模态框并播放视频
-function showModal(trailerUrl) {
-  video.src = trailerUrl;
-  modal.style.display = 'flex';
-}
+// 点击海报打开模态框
+items.forEach((item) => {
+  const poster = item.querySelector('.movie-poster');
+  poster.addEventListener('click', () => {
+    const trailerUrl = poster.dataset.trailer;
+    video.src = trailerUrl;
+    modal.style.display = 'flex';
+  });
+});
 
-// 关闭模态框并清除资源
-function closeModalHandler() {
+// 关闭模态框
+closeModal.addEventListener('click', () => {
   modal.style.display = 'none';
   video.pause();
-  video.src = ''; // 清除视频链接，释放资源
-}
-    function moveCarousel(index = null) {
-  if (index !== null) {
-    offset = index;
-  } else {
-    offset = (offset + 1) % posters.length;
-  }
+  video.src = '';
+});
 
-  // 更新整个轮播容器的位置
-  carousel.style.transform = `translateX(-${offset * 100}%)`;
-
-  updateActiveDot(); // 更新滑动线按钮状态
-}
 // 点击空白区域关闭模态框
 modal.addEventListener('click', (event) => {
   if (event.target === modal) {
-    closeModalHandler();
+    closeModal.click();
   }
 });
 
-// 点击关闭按钮关闭模态框
-closeModal.addEventListener('click', closeModalHandler);
-
-// 点击电影海报打开模态框
-posters.forEach((poster) => {
-  poster.addEventListener('click', () => {
-    const trailer = poster.dataset.trailer;
-    showModal(trailer);
-  });
-});
-
-// 初始化页面
-moveCarousel(0); // 默认展示第一个海报
-startAutoSlide(); // 开始自动循环
+// 初始化
+moveCarousel(0);
+startAutoSlide();
   </script>
 </body>
 </html>
