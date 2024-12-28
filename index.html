@@ -7,144 +7,138 @@
   <style>
     /* 页面整体居中 */
 /* 全局样式 */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: #121212;
-  color: #fff;
-  overflow-x: hidden;
-}
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-/* 轮播容器 */
-.carousel-container {
-  position: relative;
-  width: 80%;
-  margin: auto;
-  overflow: hidden;
-}
+    /* 轮播容器 */
+    .carousel-container {
+      position: relative;
+      width: 80%;
+      margin: auto;
+      overflow: hidden;
+    }
 
-/* 轮播 */
-.carousel {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 300%;
-}
+    /* 轮播 */
+    .carousel {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: calc(100% * 6); /* 6个项目 */
+    }
 
-/* 单个电影项 */
-.movie-item {
-  flex: 0 0 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: left;
-  box-sizing: border-box;
-  padding: 20px;
-}
+    /* 单个电影项 */
+    .movie-item {
+      flex: 0 0 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      box-sizing: border-box;
+      padding: 20px;
+    }
 
-/* 电影海报 */
-.movie-poster {
-  width: 40%;
-  height: auto;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  margin-right: 20px;
-}
+    /* 电影海报 */
+    .movie-poster {
+      width: 40%;
+      height: 800px; /* 指定高度 */
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      margin-right: 20px;
+    }
 
-/* 电影信息 */
-.movie-info {
-  width: 50%;
-}
+    /* 电影信息 */
+    .movie-info {
+      width: 50%;
+    }
 
-.movie-info h3 {
-  margin: 10px 0;
-  font-size: 24px;
-}
+    .movie-info h3 {
+      margin: 10px 0;
+      font-size: 24px;
+    }
 
-.movie-info p {
-  margin: 5px 0;
-  font-size: 18px;
-}
+    .movie-info p {
+      margin: 5px 0;
+      font-size: 18px;
+    }
 
-/* 滑动线按钮 */
-.dots {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
-}
+    /* 滑动线按钮 */
+    .dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-.dot {
-  width: 8px;
-  height: 8px;
-  margin: 0 5px;
-  border-radius: 50%;
-  background: #ccc;
-  cursor: pointer;
-}
+    .dot {
+      width: 8px;
+      height: 8px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+    }
 
-.dot.active {
-  background: #fff;
-}
+    .dot.active {
+      background: #fff;
+    }
 
-/* 模态框 */
-#modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+    /* 模态框 */
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
 
-#modal video {
-  max-width: 80%;
-  max-height: 80%;
-}
+    #modal video {
+      max-width: 80%;
+      max-height: 80%;
+    }
 
-#close-modal {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: #ff0000;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .movie-item {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+    #close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #ff0000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-  .movie-poster {
-    width: 80%;
-    margin: 0 0 10px;
-  }
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .movie-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
 
-  .movie-info {
-    width: 100%;
-  }
+      .movie-poster {
+        width: 80%;
+        margin: 0 0 10px;
+      }
 
-  .modal-content {
-    width: 90%;
-    height: 50%;
-  }
-}
+      .movie-info {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -222,7 +216,21 @@ const dots = document.querySelectorAll('.dot');
 const modal = document.getElementById('modal');
 const video = document.getElementById('trailer');
 const closeModal = document.getElementById('close-modal');
-
+// 检查图片是否加载成功
+    const posters = document.querySelectorAll('.movie-poster');
+    posters.forEach(poster => {
+      const bgImage = poster.style.backgroundImage.replace(/url\("(.*)"\)/, '$1');
+      const img = new Image();
+      img.src = bgImage;
+      img.onerror = () => {
+        console.error(`Image failed to load: ${bgImage}`);
+        poster.style.backgroundColor = '#333';
+        poster.innerHTML = '<p>图片加载失败</p>';
+        poster.style.display = 'flex';
+        poster.style.justifyContent = 'center';
+        poster.style.alignItems = 'center';
+      };
+    });
 let currentIndex = 0;
 let autoSlideInterval;
 
