@@ -3,76 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>电影海报居中显示</title>
-  <style>
-    /* 页面整体居中 */
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      min-height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      overflow-x: hidden;
-    }
-    /* 使海报页面居中显示并增加错位空隙 */
-.carousel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  <title>循环海报轮播</title>
+  <link rel="stylesheet" href="styles.css">
+<style>
+  body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.carousel-container {
   position: relative;
   width: 100%;
-  height: 300px;
   overflow: hidden;
-  margin: auto;
-  box-sizing: border-box;
 }
 
-/* 单个海报样式 */
-.movie-poster {
-  flex: 0 0 25%;
-  height: 80%; /* 调整高度让间距更明显 */
-  margin: 0 10px; /* 增加海报之间的空隙 */
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px; /* 增加圆角 */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5); /* 增加阴影效果 */
-  transition: transform 1s ease-in-out;
-}
-
-/* 当前海报放大效果（可选，增强视觉表现） */
-.movie-poster.active {
-  transform: scale(1.05); /* 当前显示的海报稍微放大 */
-  z-index: 1;
-}
-
-/* 滑动线容器 */
-.navigation-dots {
+.carousel {
   display: flex;
-  justify-content: center;
+  gap: 20px;
+  transition: transform 0.5s ease-in-out;
+}
+
+.poster {
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  margin-top: 20px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  margin: 0 5px;
-  background: #666;
-  border-radius: 50%;
+.poster-image {
+  width: 200px;
+  height: auto;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-.dot.active {
-  background: #fff;
+.info {
+  padding: 20px;
 }
 
-/* 模态框样式 */
-#modal {
+.info h3 {
+  margin: 0 0 10px;
+}
+
+.trailer-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -82,157 +58,110 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(10px);
-  z-index: 10;
+  z-index: 1000;
+}
+
+.trailer-overlay.hidden {
   display: none;
 }
 
-.modal-content {
-  position: relative;
+.trailer iframe {
   width: 80%;
   height: 80%;
-  background: #000;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
 }
 
-#trailer {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-}
-
-#close-modal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #fff;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .movie-poster {
-    flex: 0 0 50%;
-    margin: 0 5px;
-  }
-
-  .modal-content {
-    width: 90%;
-    height: 50%;
-  }
+.hidden {
+  display: none;
 }
 </style>
 </head>
 <body>
-  <div class="carousel">
-    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer1.mp4"></div>
-    <div class="movie-poster" style="background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05cbf0516e36e38f87b726706cf7bc01ea.jpg?imageMogr2/thumbnail/2500x2500%3E')" data-trailer="trailer2.mp4"></div>
-    <div class="movie-poster" style="background-image: url('poster3.jpg')" data-trailer="trailer3.mp4"></div>
-    <div class="movie-poster" style="background-image: url('poster4.jpg')" data-trailer="trailer4.mp4"></div>
-  </div>
-  <div class="navigation-dots">
-    <span class="dot" data-index="0"></span>
-    <span class="dot" data-index="1"></span>
-    <span class="dot" data-index="2"></span>
-    <span class="dot" data-index="3"></span>
-  </div>
-  <div id="modal">
-    <div class="modal-content">
-      <video id="trailer" controls autoplay></video>
-      <button id="close-modal">关闭</button>
+  <div class="carousel-container">
+    <div class="carousel">
+      <!-- 示例海报层 -->
+      <div class="poster">
+        <img src="poster1.jpg" alt="电影海报1" class="poster-image" />
+        <div class="info">
+          <h3>电影标题1</h3>
+          <p>电影简介1</p>
+        </div>
+      </div>
+      <div class="poster">
+        <img src="poster2.jpg" alt="电影海报2" class="poster-image" />
+        <div class="info">
+          <h3>电影标题2</h3>
+          <p>电影简介2</p>
+        </div>
+      </div>
+      <!-- 可以添加更多海报 -->
     </div>
   </div>
-  <script>
-    const carousel = document.querySelector('.carousel');
-    const posters = document.querySelectorAll('.movie-poster');
-    const dots = document.querySelectorAll('.dot');
-    const modal = document.getElementById('modal');
-    const video = document.getElementById('trailer');
-    const closeModal = document.getElementById('close-modal');
 
-    let offset = 0;
-    let autoSlideInterval;
+  <!-- 弹出预告片 -->
+  <div class="trailer-overlay hidden">
+    <div class="trailer">
+      <iframe src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
 
-    function moveCarousel(index = null) {
-  if (index !== null) {
-    offset = index;
-  } else {
-    offset = (offset + 1) % posters.length;
-  }
+  <script src="scripts.js"></script>
+<script>
+  const carousel = document.querySelector('.carousel');
+const posters = document.querySelectorAll('.poster');
+const overlay = document.querySelector('.trailer-overlay');
+const iframe = overlay.querySelector('iframe');
 
-  posters.forEach((poster, idx) => {
-    poster.style.transform = `translateX(-${offset * 100}%)`;
-    if (idx === offset) {
-      poster.classList.add('active'); // 当前海报添加 `active` 类
-    } else {
-      poster.classList.remove('active'); // 其他海报移除 `active` 类
-    }
-  });
+let currentIndex = 0;
 
-  updateActiveDot();
+// 自动循环滚动
+function autoScroll() {
+  currentIndex++;
+  if (currentIndex >= posters.length) currentIndex = 0;
+  updateCarousel();
 }
 
-    function updateActiveDot() {
-      dots.forEach((dot, idx) => {
-        if (idx === offset) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
-    }
+function updateCarousel() {
+  const offset = -(currentIndex * (posters[0].offsetWidth + 20)); // 每层宽度+间隙
+  carousel.style.transform = `translateX(${offset}px)`;
+}
 
-    function startAutoSlide() {
-      autoSlideInterval = setInterval(() => {
-        moveCarousel();
-      }, 3000);
-    }
+// 事件监听：点击海报弹出预告片
+posters.forEach((poster, index) => {
+  poster.querySelector('.poster-image').addEventListener('click', () => {
+    iframe.src = `trailer${index + 1}.mp4`; // 示例预告片路径
+    overlay.classList.remove('hidden');
+  });
+});
 
-    function stopAutoSlide() {
-      clearInterval(autoSlideInterval);
-    }
+// 关闭预告片
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) {
+    overlay.classList.add('hidden');
+    iframe.src = '';
+  }
+});
 
-    dots.forEach((dot) => {
-      dot.addEventListener('click', (event) => {
-        const index = parseInt(event.target.dataset.index);
-        stopAutoSlide();
-        moveCarousel(index);
-        startAutoSlide();
-      });
-    });
+// 支持手动滑动
+let startX = 0;
+let isDragging = false;
 
-    function showModal(trailerUrl) {
-      video.src = trailerUrl;
-      modal.style.display = 'flex';
-    }
+carousel.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  startX = e.pageX;
+});
 
-    function closeModalHandler() {
-      modal.style.display = 'none';
-      video.pause();
-      video.src = '';
-    }
+carousel.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  const move = e.pageX - startX;
+  carousel.style.transform = `translateX(${move}px)`;
+});
 
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) {
-        closeModalHandler();
-      }
-    });
+carousel.addEventListener('mouseup', () => {
+  isDragging = false;
+});
 
-    closeModal.addEventListener('click', closeModalHandler);
-
-    posters.forEach((poster) => {
-      poster.addEventListener('click', () => {
-        const trailer = poster.dataset.trailer;
-        showModal(trailer);
-      });
-    });
-
-    moveCarousel(0);
-    startAutoSlide();
-  </script>
+// 自动循环
+setInterval(autoScroll, 3000);
+</script>
 </body>
 </html>
