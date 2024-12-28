@@ -45,7 +45,9 @@ body {
 /* 电影海报 */
 .movie-poster {
   width: 40%;
-  height: 300px;
+  height: auto;
+  align-items: center;
+  justify-content: center;
   background-size: cover;
   background-position: center;
   border-radius: 10px;
@@ -72,13 +74,14 @@ body {
 /* 滑动线按钮 */
 .dots {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 50px;
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   margin: 0 5px;
   border-radius: 50%;
   background: #ccc;
@@ -196,27 +199,11 @@ body {
       <span class="dot active" data-index="0"></span>
       <span class="dot" data-index="1"></span>
       <span class="dot" data-index="2"></span>
+      <span class="dot" data-index="3"></span>
+      <span class="dot" data-index="4"></span>
+      <span class="dot" data-index="5"></span>
     </div>
   </div>
-
-  <!-- 模态框 -->
-  <div id="modal">
-    <video id="trailer" controls></video>
-    <button id="close-modal">关闭</button>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-  <!-- 滑动线 -->
-<div class="navigation-dots">
-  <span class="dot" data-index="0"></span>
-  <span class="dot" data-index="1"></span>
-  <span class="dot" data-index="2"></span>
-  <span class="dot" data-index="3"></span>
-  <span class="dot" data-index="4"></span>
-  <span class="dot" data-index="5"></span>
-</div>
-
   <!-- 模态框播放预告片 -->
   <div id="modal">
     <div class="modal-content">
@@ -225,6 +212,9 @@ body {
     </div>
   </div>
 
+  <script src="script.js"></script>
+</body>
+  
   <script>
     const carousel = document.querySelector('.carousel');
 const items = document.querySelectorAll('.movie-item');
