@@ -69,13 +69,26 @@
       background-repeat: no-repeat;
       animation: slideShow 15s infinite;
     }
+    .header-with-slider::before {
+     content: '';
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background: rgba(0, 0, 0, 0.5); /* 调整透明度 */
+     z-index: 0;
+   }
     /* 动画：更改背景图 */
-@keyframes slideShow {
-  0% { background-image: url('https://qcloud.dpfile.com/pc/L6sZI4Qns3aktd8BJnrs-BS19tO6gtixCITCEj6k6G3yruugCiVRG1P-dzvdbhycjoJrvItByyS4HHaWdXyO_I7F0UeCRQYMHlogzbt7GHgNNiIYVnHvzugZCuBITtvjski7YaLlHpkrQUr5euoQrg.jpg'); }
-  33% { background-image: url('https://qcloud.dpfile.com/pc/xABpMGlPHIzpoE5oAbdMdRcE9xxN6s1LVRGFQUxnnG5U9slrsejo5zHJIueJv84QjoJrvItByyS4HHaWdXyO_I7F0UeCRQYMHlogzbt7GHgNNiIYVnHvzugZCuBITtvjski7YaLlHpkrQUr5euoQrg.jpg'); }
-  66% { background-image: url('https://qcloud.dpfile.com/pc/TSYj2NLD4xYrFyWPMiJDSP-itbxI4ieF-0ej1yDpo_ZmE5cTlkEghg4rwc6lZ2zyjoJrvItByyS4HHaWdXyO_I7F0UeCRQYMHlogzbt7GHgNNiIYVnHvzugZCuBITtvjski7YaLlHpkrQUr5euoQrg.jpg'); }
-  100% { background-image: url('https://qcloud.dpfile.com/pc/Eg8hny7KqwEpMvZcioShrFsJbCv3_MghcF3bRgJYHnwXKNwzfgiuxdswZL2PI7n0joJrvItByyS4HHaWdXyO_I7F0UeCRQYMHlogzbt7GHgNNiIYVnHvzugZCuBITtvjski7YaLlHpkrQUr5euoQrg.jpg'); }
-}
+    @keyframes slideShow {
+  0% { background-image: url('https://qcloud.dpfile.com/pc/L6sZI4Qns3aktd8BJnrs-BS19tO6gtixCITCEj6k6G3yruugCiVRG1P-dzvdbhycjoJrvItByyS4HHaWdXyO_I7F0UeCRQYMHlogzbt7GHgNNiIYVnHvzugZCuBITtvjski7YaLlHpkrQUr5euoQrg.jpg'); opacity: 0; }
+  15% { opacity: 1; }
+  33% { background-image: url('https://qcloud.dpfile.com/pc/xABpMGlPHIzpoE5oAbdMdRcE9xxN6s1LVRGFQUxnnG5U9slrsejo5zHJIueJv84QjoJrvItByyS4HHaWdXyO_I7F0UeCRQYMHlogzbt7GHgNNiIYVnHvzugZCuBITtvjski7YaLlHpkrQUr5euoQrg.jpg'); opacity: 1; }
+  48% { opacity: 0; }
+  66% { background-image: url('https://qcloud.dpfile.com/pc/TSYj2NLD4xYrFyWPMiJDSP-itbxI4ieF-0ej1yDpo_ZmE5cTlkEghg4rwc6lZ2zyjoJrvItByyS4HHaWdXyO_I7F0UeCRQYMHlogzbt7GHgNNiIYVnHvzugZCuBITtvjski7YaLlHpkrQUr5euoQrg.jpg'); opacity: 0; }
+  81% { opacity: 1; }
+  100% { background-image: url('https://qcloud.dpfile.com/pc/Eg8hny7KqwEpMvZcioShrFsJbCv3_MghcF3bRgJYHnwXKNwzfgiuxdswZL2PI7n0joJrvItByyS4HHaWdXyO_I7F0UeCRQYMHlogzbt7GHgNNiIYVnHvzugZCuBITtvjski7YaLlHpkrQUr5euoQrg.jpg'); opacity: 1; }
+ }
     /* 文本样式 */
     .header-with-slider h1 {
       margin: 0;
