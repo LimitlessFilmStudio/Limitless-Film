@@ -17,109 +17,96 @@
       padding: 20px;
       text-align: center;
     }
-    /* 顶部右侧菜单样式 */
-    .top-right-menu {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      border-radius: 5px;
-      padding: 10px;
-      z-index: 1000;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+    .navbar {
+      background-color: #333;
+      border-bottom: 0px solid #ddd;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-end; /* 将导航栏内容对齐到右上角 */
     }
-    .top-right-menu.hidden {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    .top-right-menu ul {
+    .menu {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 10px;
+      gap: 20px;
     }
-    .top-right-menu ul li {
-      display: inline-block;
+    .menu-item {
+      position: relative;
     }
-    .top-right-menu ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      padding: 5px 10px;
-      border-radius: 3px;
-      transition: background-color 0.3s ease;
+    .menu-button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: right; 
+      color: #fff; /* 菜单字体颜色为白色 */
     }
-    .top-right-menu ul li a:hover {
-      background-color: #fff;
+    .menu-button:hover {
       color: red;
     }
-    /* 页头样式 */
-    .header-with-slider {
-      position: relative;
-      height: 800px;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      animation: slideShow 15s infinite;
-    }
-    .header-with-slider::before {
-     content: '';
-     position: absolute;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     background: rgba(0, 0, 0, 0.5); /* 调整透明度 */
-     z-index: 0;
-   }
-    /* 动画：更改背景图 */
-    @keyframes slideShow {
-  0% { background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a7f0bf8e3278dd4e71bc79874043c0.jpg?imageMogr2/thumbnail/2500x2500%3E'); opacity: 0; }
-  15% { opacity: 1; }
-  33% { background-image: url('https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05cbf5be77e5b28d8182bf0e48ba50807a.jpg?imageMogr2/thumbnail/2500x2500%3E'); opacity: 1; }
-  48% { opacity: 0; }
-  66% { background-image: url('https://p0.pipi.cn/friday/ba9212bf54b5b3577288274e48b6d7ad.jpg?imageMogr2/thumbnail/2500x2500%3E'); opacity: 0; }
-  81% { opacity: 1; }
-  100% { background-image: url('hhttps://p0.pipi.cn/basicdata/54ecdedd0fa338d7c3c6967e05b0809f22a8c.jpg?imageMogr2/thumbnail/2500x2500%3E'); opacity: 1; }
- }
-    /* 文本样式 */
-    .header-with-slider h1 {
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0; /* 子菜单靠右对齐，防止溢出 */
+      background-color: rgba(51, 51, 51, 0.8); /* 半透明背景 */
+      border: 1px solid #555;
+      list-style: none;
+      padding: 10px 0;
       margin: 0;
-      font-size: 32px;
-      font-weight: bold;
-      z-index: 1;
-      font-size: 24px;
-      margin-top: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      min-width: 240px; /* 子菜单最小宽度，防止内容太短 */
+      z-index: 100; /* 确保子菜单在顶层 */
+    }
+    .submenu li {
+      padding: 5px 20px;
+      font-size: 14px;
+    }
+    .submenu li a {
+      text-decoration: none;
+      color: #fff;
+    }
+    .submenu li a:hover {
+      color: red;
+    }
+    /* 子菜单显示样式 */
+    .menu-item:hover .submenu {
+      display: block;
+    }
+    /* 页头样式 */
+    header {
+      display: flex;
+      flex-direction: column; /* 默认纵向排列 */
+      align-items: center;
+      justify-content: center;
+      background: #333;
+      color: #fff;
+      padding: 10px 20px;
+      text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
+      margin-top: 20px;
       margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 8px;
+      margin-bottom: 12px;
       letter-spacing: 10px; /* 字母间距，单位可以是px、em等 */
       color: #CD0000;
-
     }
-    .header-with-slider h2 {
+    header h2,h3 {
       font-size: 12px;
       margin-bottom: 10px;
       letter-spacing: 5px; /* 字母间距，单位可以是px、em等 */
       color: #CD0000;
     }
-    .header-with-slider h3 {
-      font-size: 12px;
-      margin-bottom: 10px;
-      letter-spacing: 8px; /* 字母间距，单位可以是px、em等 */
-      color: #CD0000;
-    }
-    .header-with-slider p {
+    header p {
       font-size: 12px;
       color: #CD0000;
       margin-top: 30px;
-      margin-bottom: 10px;
-      letter-spacing: 5px; /* 字母间距，单位可以是px、em等 */
+      margin-bottom: 12px;
+      letter-spacing: 8px; /* 字母间距，单位可以是px、em等 */
     }
     /* 容器样式 */
     .container {
@@ -151,6 +138,7 @@
 
     .layer h2 {
       font-size: 18px;
+      text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
       margin-bottom: 10px;
       color: #fff;
     }
@@ -194,7 +182,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 80%;
+      width: 100%;
       max-width: 600px;
       background: #000;
       color: #333;
@@ -234,67 +222,88 @@
         margin: 5px 0;
     }
     /* 页脚探索更多样式 */
-    .more {
+    .more-links {
         background-color: #333;
         color: #fff;
         text-align: center;
         padding: 20px 0;
         margin-top: 5px;
     }
-    .more h3 {
+    .more-links h3 {
         margin-bottom: 10px;
         font-size: 14px;
         color: #fff; /* 可根据需要修改颜色 */
     }
-    .more ul {
+    .more-links ul {
         list-style: none;
         padding: 0;
         margin: 0;
     }
-    .more ul li {
+    .more-links ul li {
         display: inline-block;
         margin: 0 10px;
     }
-    .more ul li a {
+    .more-links ul li a {
        color: #fff;
        text-decoration: none;
        font-size: 12px;
     }
-    .more ul li a:hover {
+    .more-links ul li a:hover {
        color: red; /* 鼠标悬停颜色 */
     }
     
     /* 响应式布局 */
     @media screen and (max-width: 768px) {
+    .navbar {
+       padding: 5px;
+    }
+    .menu {
+       align-items: flex-start; /* 对齐到左侧 */
+       gap: 10px; /* 调整间距 */
+    }
+    .menu-button {
+       font-size: 10px; /* 字体稍微增大 */
+    }
+   .submenu {
+       min-width: 100%; /* 子菜单宽度调整为 100% */
+       box-shadow: none; /* 移除阴影 */
+    }
+    .submenu li {
+       padding: 5px 10px;
+       font-size: 10px;
+    }
+    .menu-item:hover .submenu {
+      display: block;
+    }
     .container {
       flex-wrap: wrap;
       justify-content: center;
     }
-    .header-with-slider {
+    .layer {
       margin-top: 20px;
-      height: 400px;
     }
-
-    .header-with-slider h1 {
-      font-size: 24px;
+    header {
+      margin-top: 10px;
+    }
+    header h1 {
+      font-size: 20px;
       letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
     }
-    .header-with-slider h2 {
+    header h2 {
+      font-size: 8px;
       letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
     }
-    .header-with-slider h3 {
+    header h3 {
+      font-size: 8px;
+      margin-bottom: 3px;
+      letter-spacing: 3.5px; /* 字母间距，单位可以是px、em等 */
+    } 
+    header p {
+      font-size: 8px;
+      margin-top: 8px;
+      margin-bottom: 5px;
       letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
     }
-    .header-with-slider p {
-      font-size: 10px;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      letter-spacing: 1px; /* 字母间距，单位可以是px、em等 */
-    }
-    .slider-dots .dot {
-      width: 10px;
-      height: 10px;
-    }  
     .layer {
       flex: 1 1 calc(33.333% - 20px);
       margin-bottom: 10px;
@@ -320,34 +329,56 @@
       height: auto;
       margin-left: 0; /* 确保贴合左侧 */
     }
-    .more ul li {
+    .more-links ul li {
       display: block;
       margin: 5px 0;
     }
-    .top-right-menu {
-      right: 5px;
-      top: 5px;
-      padding: 5px;
-    }
-    .top-right-menu ul {
-      flex-direction: row;
-      gap: 2px;
-    }
-    }   
+  }   
   </style>
 </head>
   
 <body>
-  <header class="header-with-slider">
+   <nav class="navbar">
+    <ul class="menu">
+      <!-- 第一组导航菜单 -->
+      <li class="menu-item">
+        <button class="menu-button">Contact▼</button>
+        <ul class="submenu">
+          <li><a href="#">邮箱：ednathan@foxmail.com</a></li>
+          <li><a href="#">电话(微信)：李生 178-9609-7228</a></li>
+          <li><a href="#">电话(微信)：闫生 185-1405-0716</a></li>
+        </ul>
+      </li>
+
+      <!-- 第二组导航菜单 -->
+      <li class="menu-item">
+        <button class="menu-button">AI Tools▼</button>
+        <ul class="submenu">
+          <li><a href="https://godmode.space" target="_blank">Ai Godmode</a></li>
+          <li><a href="https://chatgpt.com" target="_blank">ChatGPT</a></li>
+          <li><a href="https://www.chatbotui.com/zh" target="_blank">Chatbotui</a></li>
+          <li><a href="https://aiclonevoicefree.com" target="_blank">免费Ai语音克隆</a></li>
+          <li><a href="https://www.vidnoz.com" target="_blank">Vidnoz</a></li>
+        </ul>
+      </li>
+
+      <!-- 第三组导航菜单 -->
+      <li class="menu-item">
+        <button class="menu-button">More▼</button>
+        <ul class="submenu">
+          <li><a href="https://www.provideocoalition.com" target="_blank">Provideocoalition</a></li>
+          <li><a href="https://www.youtube.com/user/everyframeapainting" target="_blank">帧影帧画</a></li>
+          <li><a href="https://www.youtube.com/@ThisGuyEdits" target="_blank">This Guy Edits</a></li>
+          <li><a href="https://www.youtube.com/@HansTheEditor" target="_blank">Media Composer Basics</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <header>
     <h3>Limitless Film Studio</h3>
     <h1>不止电影工作室</h1>
     <h2>光影不止，梦想不息</h2>
     <p>不止电影工作室，以电影赋予艺术生命，用极致影像打动心灵。我们团队深耕电影与电视剧创作，经验丰富，热爱突破，不止于当下，只为呈现每一帧的震撼与奇迹。</p>
-    <div class="slider-dots">
-       <span onclick="changeImage(0)" class="dot active"></span>
-       <span onclick="changeImage(1)" class="dot"></span>
-       <span onclick="changeImage(2)" class="dot"></span>
-  </div>
   </header>
   <div class="container">
     <!-- 第一层 -->
@@ -355,10 +386,12 @@
       <h2>Nathan Lee</h2>
       <p>创始人 & 剪辑指导</p><p>秉持“剪辑是故事灵魂”的理念，精通犯罪、动作、剧情等题材，以画面承载情感，用剪辑塑造力量。</p>
       <p>参与作品：</p>
-      <div class="movie-item">
+      <div class="movie-item">   
         <img src="https://p0.pipi.cn/mediaplus/friday_image_fe/cdf05c9a15d5c2fa463e790a6281d8cd3cb54.jpg?imageMogr2/thumbnail/2500x2500%3E" data-trailer="https://vod.pipi.cn/fec9203cvodtransbj1251246104/791f0c341397757894326119580/v.f42905.mp4">
         <div class="movie-info"> 
+        <a href="movie-details.html">
           <p><strong>电影：</strong>危机航线</p>
+         </a>
           <p><strong>导演：</strong>彭顺</p>
           <p><strong>上映日期：</strong>2024-9-30</p>
           <p><strong>总票房：</strong>3亿人民币</p> 
@@ -520,78 +553,90 @@
   <div class="modal">
     <iframe src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
-  <div class="top-right-menu">
-  <ul>
-    <li><a href="#footer-contact">联系方式</a></li>
-    <li><a href="#more">探索更多</a></li>
-  </ul>
-</div>
-
+  
 <footer id="footer-contact">
   <p>© 2024 Limitless Film Studio</p>
   <p>联系方式：ednathan@foxmail.com | 微信+电话：李生 178-9609-7228| 微信+电话：闫生 185-1405-0716</p>
 </footer>
 
-<div id="more" class="more">  
+<div id="more-links" class="more-links">  
   <h3>探索更多</h3>
   <ul>
-    <li><a href="https://www.provideocoalition.com" target="_blank">Provideocoalition</a></li>
     <li><a href="https://www.avid.com" target="_blank">AVID</a></li>
+    <li><a href="https://www.kinosoundtrack.com" target="_blank">Kinosoundtrack</a></li>
+    <li><a href="https://freesound.org" target="_blank">Freesound</a></li>
+    <li><a href="https://pond5.com" target="_blank">Pond5正版素材</a></li>
+    <li><a href="https://8kraw.com" target="_blank">8KRAW正版素材</a></li>
+    <li><a href="https://www.online-convert.com" target="_blank">Online-Convert</a></li>
+    <li><a href="https://www.newcger.com" target="_blank">NewCGer</a></li>
+    <li><a href="http://www.akuziti.com/mb/" target="_blank">毛笔字在线生成器</a></li>
     <li><a href="https://movie.douban.com" target="_blank">豆瓣电影</a></li>
     <li><a href="https://www.gyg.la" target="_blank">观影</a></li>
   </ul>
 </div>
-  <script>
+<script>
     // JavaScript: 弹出预告片功能
     document.addEventListener("DOMContentLoaded", () => {
   const images = document.querySelectorAll(".layer img");
   const modal = document.querySelector(".modal");
   const overlay = document.querySelector(".overlay");
   const iframe = modal.querySelector("iframe");
-  const menu = document.getElementById("topMenu"); // 获取菜单元素
-  let lastScrollY = window.scrollY; // 保存上一次滚动位置
+  const menuButtons = document.querySelectorAll('.menu-button');
+  const submenus = document.querySelectorAll('.submenu');
 
-const header = document.querySelector('.header-with-slider');
-  const images = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
-  let index = 0;
+  // 记录当前打开的菜单
+  let activeMenu = null;
 
-  function changeBackground() {
-    index = (index + 1) % images.length;
-    header.style.backgroundImage = `url(${images[index]})`;
+  // === 菜单功能 ===
+  // 为每个菜单按钮添加点击事件监听
+  menuButtons.forEach((menuButton) => {
+    menuButton.addEventListener('click', (e) => {
+      e.stopPropagation(); // 防止冒泡
+
+      const submenu = menuButton.nextElementSibling;
+
+      // 如果当前菜单已经打开，再次点击关闭
+      if (submenu === activeMenu) {
+        submenu.style.display = 'none';
+        activeMenu = null;
+      } else {
+        // 隐藏其他子菜单
+        hideAllSubmenus();
+        submenu.style.display = 'block';
+        activeMenu = submenu;
+      }
+    });
+  });
+
+  // 点击页面其他地方时隐藏所有子菜单
+  document.addEventListener('click', () => {
+    hideAllSubmenus();
+    activeMenu = null;
+  });
+
+  // 隐藏所有子菜单的函数
+  function hideAllSubmenus() {
+    submenus.forEach((submenu) => {
+      submenu.style.display = 'none';
+    });
   }
 
-  // 每5秒切换一次背景图
-  setInterval(changeBackground, 5000);
+  // === 预告片功能 ===
   // 点击海报显示预告片
   images.forEach((img) => {
     img.addEventListener("click", () => {
       const trailerUrl = img.getAttribute("data-trailer");
-      iframe.src = trailerUrl;
-      modal.style.display = "block";
-      overlay.style.display = "block";
+      iframe.src = trailerUrl; // 设置预告片链接
+      modal.style.display = "block"; // 显示模态框
+      overlay.style.display = "block"; // 显示遮罩层
     });
   });
 
   // 点击遮罩层关闭预告片
   overlay.addEventListener("click", () => {
-    modal.style.display = "none";
-    overlay.style.display = "none";
-    iframe.src = ""; // 停止播放
-  });
-
-  // 滚动时动态显示或隐藏菜单
-  window.addEventListener("scroll", () => {
-    const currentScrollY = window.scrollY;
-
-    if (currentScrollY > lastScrollY && currentScrollY > 50) {
-      // 向下滚动且页面已滚动一定距离时隐藏菜单
-      menu.classList.add("hidden");
-    } else {
-      // 向上滚动或页面在顶部时显示菜单
-      menu.classList.remove("hidden");
-    }
-
-    lastScrollY = currentScrollY; // 更新上一次滚动位置
+    modal.style.display = "none"; // 隐藏模态框
+    overlay.style.display = "none"; // 隐藏遮罩层
+    iframe.src = ""; // 停止播放预告片
   });
 });
   </script>
